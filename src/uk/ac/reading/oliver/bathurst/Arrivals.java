@@ -1,16 +1,20 @@
 package uk.ac.reading.oliver.bathurst;
 import jcsp.lang.CSProcess;
-import jcsp.lang.ints.One2OneChannelInt;
 
 class Arrivals implements CSProcess {
-    private final One2OneChannelInt arrive;
+    private Control control;
 
-    Arrivals(One2OneChannelInt arrive){
-        this.arrive = arrive;
+    Arrivals(Control c){
+        this.control = c;
     }
 
-    @Override
     public void run() {
-
+        while(true){
+            try {
+                control.arrive();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

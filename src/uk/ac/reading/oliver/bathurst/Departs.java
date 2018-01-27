@@ -1,17 +1,20 @@
 package uk.ac.reading.oliver.bathurst;
 import jcsp.lang.CSProcess;
-import jcsp.lang.ints.ChannelInputInt;
 
-class Departs implements CSProcess{
-    private final ChannelInputInt depart;
+class Departs implements CSProcess {
+    private Control control;
 
-    Departs(ChannelInputInt in) {
-        depart = in;
+    Departs(Control c) {
+        this.control = c;
     }
 
     public void run() {
-        //while(true) {
-            System.out.println("Spaces left" + depart.read());
-        //}
+        while(true){
+            try {
+                control.depart();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }
