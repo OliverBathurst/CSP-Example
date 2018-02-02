@@ -1,20 +1,17 @@
 package uk.ac.reading.oliver.bathurst;
 import jcsp.lang.CSProcess;
+import jcsp.lang.ints.One2OneChannelInt;
 
 class Departs implements CSProcess {
-    private Control control;
+    private One2OneChannelInt depart;
 
-    Departs(Control c) {
-        this.control = c;
+    Departs(One2OneChannelInt depart) {
+        this.depart = depart;
     }
 
     public void run() {
         while(true){
-            try {
-                control.depart();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            depart.write(1);
         }
     }
 }

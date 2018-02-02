@@ -1,34 +1,24 @@
 package uk.ac.reading.oliver.bathurst;
 import jcsp.lang.CSProcess;
+import jcsp.lang.ints.One2OneChannelInt;
 
 class Control implements CSProcess {
-    private int availableSpaces = 100, capacity = 100;
+    private One2OneChannelInt arrive, depart;
+    private int spacesLeft = 100, initialCapacity = 100;
 
-    Control(int availableSpaces, int capacity) {
-        this.availableSpaces = availableSpaces;
-        this.capacity = capacity;
+    Control(One2OneChannelInt arrive, One2OneChannelInt depart) {
+        this.arrive = arrive;
+        this.depart = depart;
     }
-    //Run indefinitely
     public void run(){
-        while(true){}
-    }
-
-    synchronized void arrive() throws InterruptedException {
-        if(availableSpaces == 0) {
-            while (availableSpaces == 0) {
-                wait();
-                availableSpaces--;
-                notifyAll();
+        while(true){
+            if(arrive.read() == 2 && spacesLeft != 0){
+                spacesLeft--;
+                System.out.println("Spaces: " + spacesLeft);
             }
-        }
-    }
-
-    synchronized void depart() throws InterruptedException {
-        if(availableSpaces == capacity) {//if empty car park
-            while (availableSpaces == capacity) {//wait until one is in car park
-                wait();
-                availableSpaces++;
-                notifyAll();
+            if(depart.read() == 1 && spacesLeft != initialCapacity){
+                spacesLeft++;
+                System.out.println("Spaces: " + spacesLeft);
             }
         }
     }
