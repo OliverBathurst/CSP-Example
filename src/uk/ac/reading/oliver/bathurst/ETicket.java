@@ -20,6 +20,8 @@ class ETicket implements CSProcess{
 
     @Override
     public void run() {
-
+        while(true){
+            System.out.println("Place booked: " + eticketChannel.read());
+        }
     }
 }

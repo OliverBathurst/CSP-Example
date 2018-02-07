@@ -20,25 +20,32 @@ class BookingGUI implements CSProcess {
     private JPanel mainPanel;
     private JButton book;
 
-    private BookingGUI(){}
-
-    BookingGUI(One2OneChannelInt arrive, One2OneChannelInt depart,
-               One2OneChannel eticketChannel){
+    BookingGUI(One2OneChannelInt arrive, One2OneChannelInt depart, One2OneChannel eticketChannel){
         this.arrive = arrive;
         this.depart = depart;
         this.eticketChannel = eticketChannel;
+        this.setupListeners();
         this.show();
+    }
+
+    void setupListeners(){
+        book.addActionListener(e -> book());
     }
 
     private void show(){
         JFrame frame = new JFrame("Online Booking Application");
-        frame.setContentPane(new BookingGUI().mainPanel);
+        frame.setContentPane(mainPanel);
         frame.setPreferredSize(new Dimension(1500,500));
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);
     }
-
+    private void book(){
+        System.out.println("Booking...");
+        eticketChannel.write("Sample registration ID");
+    }
     @Override
-    public void run() {}
+    public void run() {
+        while(true){}
+    }
 }

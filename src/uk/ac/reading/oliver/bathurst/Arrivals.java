@@ -19,7 +19,7 @@ class Arrivals implements CSProcess {
 
     public void run() {
         while(true){
-            arrive.write(2);
+            arrive.write(1);
         }
     }
 }

@@ -21,13 +21,13 @@ class Control implements CSProcess {
     }
     public void run(){
         while(true){
-            if(arrive.read() == 2 && spacesLeft != 0){
+            if(arrive.read() == 1 && spacesLeft != 0){
                 spacesLeft--;
-                System.out.println("Spaces: " + spacesLeft);
+                //System.out.println("Spaces: " + spacesLeft);
             }
             if(depart.read() == 1 && spacesLeft != initialCapacity){
                 spacesLeft++;
-                System.out.println("Spaces: " + spacesLeft);
+                //System.out.println("Spaces: " + spacesLeft);
             }
         }
     }
