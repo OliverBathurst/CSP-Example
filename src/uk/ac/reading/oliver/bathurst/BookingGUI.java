@@ -20,7 +20,8 @@ class BookingGUI implements CSProcess {
     private JPanel mainPanel;
     private JButton book;
 
-    BookingGUI(One2OneChannelInt arrive, One2OneChannelInt depart, One2OneChannel eticketChannel){
+    BookingGUI(One2OneChannelInt arrive, One2OneChannelInt depart,
+               One2OneChannel eticketChannel){
         this.arrive = arrive;
         this.depart = depart;
         this.eticketChannel = eticketChannel;
@@ -28,7 +29,7 @@ class BookingGUI implements CSProcess {
         this.show();
     }
 
-    void setupListeners(){
+    private void setupListeners(){
         book.addActionListener(e -> book());
     }
 
