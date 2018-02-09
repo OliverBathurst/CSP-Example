@@ -15,9 +15,10 @@ class Main {
     public static void main(String arg[]) {
         One2OneChannelInt arrive = new One2OneChannelInt();//arrive and depart channels
         One2OneChannelInt depart = new One2OneChannelInt();
+        One2OneChannelInt spacesLeft = new One2OneChannelInt();
         One2OneChannel eticket = new One2OneChannel();//eticket channel, written to by GUI thread
 
-        new Parallel( new CSProcess[]{new Arrivals(arrive), new Departs(depart), new Control(arrive,depart),
-                new BookingGUI(arrive, depart, eticket), new ETicket(eticket)}).run();//create new parallel and run
+        new Parallel( new CSProcess[]{new Arrivals(arrive), new Departs(depart), new Control(arrive,depart, spacesLeft),
+                new BookingGUI(arrive, depart, eticket, spacesLeft), new ETicket(eticket)}).run();//create new parallel and run
     }
 }

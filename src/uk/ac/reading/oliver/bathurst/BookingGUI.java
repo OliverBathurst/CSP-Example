@@ -15,16 +15,17 @@ import java.awt.*;
  * The eticket channel is written to after booking, to produce an electronic ticket for the user
  */
 class BookingGUI implements CSProcess {
-    private One2OneChannelInt arrive, depart;//for booking and releasing a place
+    private One2OneChannelInt arrive, depart, spacesLeft;//for booking and releasing a place
     private One2OneChannel eticketChannel;
     private JPanel mainPanel;
     private JButton book;
 
     BookingGUI(One2OneChannelInt arrive, One2OneChannelInt depart,
-               One2OneChannel eticketChannel){
+               One2OneChannel eticketChannel, One2OneChannelInt spacesLeft){
         this.arrive = arrive;
         this.depart = depart;
         this.eticketChannel = eticketChannel;
+        this.spacesLeft = spacesLeft;
         this.setupListeners();
         this.show();
     }
@@ -36,14 +37,16 @@ class BookingGUI implements CSProcess {
     private void show(){
         JFrame frame = new JFrame("Online Booking Application");
         frame.setContentPane(mainPanel);
-        frame.setPreferredSize(new Dimension(1500,500));
+        frame.setPreferredSize(new Dimension(400,500));
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);
     }
     private void book(){
-        System.out.println("Booking...");
-        eticketChannel.write("Sample registration ID");
+        if(spacesLeft.read() > 0) {
+            System.out.println("Booking");
+            eticketChannel.write("Sample registration ID");
+        }
     }
     @Override
     public void run() {
