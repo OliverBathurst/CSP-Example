@@ -19,6 +19,6 @@ class Main {
         One2OneChannel eticket = new One2OneChannel();//eticket channel, written to by GUI thread
 
         new Parallel( new CSProcess[]{new Arrivals(arrive), new Departs(depart), new Control(arrive,depart, spacesLeft),
-                new BookingGUI(arrive, depart, eticket, spacesLeft), new ETicket(eticket)}).run();//create new parallel and run
+                new BookingGUI(eticket, spacesLeft), new MailTool(eticket)}).run();//create new parallel and run
     }
 }

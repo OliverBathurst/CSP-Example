@@ -12,7 +12,7 @@ import jcsp.lang.ints.One2OneChannelInt;
  */
 class Control implements CSProcess {
     private final One2OneChannelInt arrive, depart, spacesLeftChannel;
-    private final int initialCapacity = 100;
+    private final Space[] spaces = new Space[100];
     private int spacesLeft = 100;
 
     Control(One2OneChannelInt arrive, One2OneChannelInt depart, One2OneChannelInt spacesLeftChannel) {
@@ -22,15 +22,15 @@ class Control implements CSProcess {
     }
     public void run(){
         while(true){
-            if(spacesLeft != 0 && arrive.read() == 1){
+            if(arrive.read() == 1 && spacesLeft != 0){
                 spacesLeft--;
-                spacesLeftChannel.write(spacesLeft);
                 System.out.println("Spaces: " + spacesLeft);
+                spacesLeftChannel.write(spacesLeft);
             }
-            if(spacesLeft != initialCapacity && depart.read() == 1){
+            if(depart.read() == 1 && spacesLeft != spaces.length){
                 spacesLeft++;
-                spacesLeftChannel.write(spacesLeft);
                 System.out.println("Spaces: " + spacesLeft);
+                spacesLeftChannel.write(spacesLeft);
             }
         }
     }

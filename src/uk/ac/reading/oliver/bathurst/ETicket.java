@@ -15,7 +15,7 @@ import java.awt.*;
  */
 class ETicket implements CSProcess{
     private final DefaultListModel<String> listModel = new DefaultListModel<>();
-    private final One2OneChannel eticketChannel;
+    private final One2OneChannel unitChannel;
     private JPanel panel1;
     private JList<String> inbox;
     private JButton Delete;
@@ -23,8 +23,8 @@ class ETicket implements CSProcess{
     private JButton Next;
     private JScrollPane scroll;
 
-    ETicket(One2OneChannel email){
-        this.eticketChannel = email;
+    ETicket(One2OneChannel unitChannel){
+        this.unitChannel = unitChannel;
         this.showGUI();
         this.inbox.setModel(listModel);
         Delete.addActionListener(e -> {
@@ -55,8 +55,8 @@ class ETicket implements CSProcess{
     }
     @Override
     public void run() {
-        while(true){
-            listModel.addElement(eticketChannel.read().toString());
+        while (true) {//wait for incoming booking references and add to the mail bag (list)}
+            listModel.addElement(unitChannel.read().toString());
         }
     }
 }
