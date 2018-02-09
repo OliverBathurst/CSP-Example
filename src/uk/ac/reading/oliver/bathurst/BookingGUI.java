@@ -15,8 +15,7 @@ import java.awt.*;
  * The eticket channel is written to after booking, to produce an electronic ticket for the user
  */
 class BookingGUI implements CSProcess {
-    private final One2OneChannelInt arrive, depart;
-    private final One2OneChannelInt spacesLeft;//for booking and releasing a place
+    private final One2OneChannelInt arrive, depart, spacesLeft;//for booking and releasing a place
     private final One2OneChannel eticketChannel;
     private JPanel mainPanel;
     private JButton book;
