@@ -5,12 +5,8 @@
 package uk.ac.reading.oliver.bathurst;
 import jcsp.lang.CSProcess;
 import jcsp.lang.One2OneChannel;
-
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.ComponentAdapter;
 
 /**
  * This class simulates the production of an electronic ticket after a booking has been made.
@@ -18,13 +14,14 @@ import java.awt.event.ComponentAdapter;
  * this class then reads said channel and produces an eticket with the provided information.
  */
 class ETicket implements CSProcess{
-    private DefaultListModel<String> listModel = new DefaultListModel<>();
+    private final DefaultListModel<String> listModel = new DefaultListModel<>();
     private final One2OneChannel eticketChannel;
     private JPanel panel1;
     private JList<String> inbox;
     private JButton Delete;
     private JButton previousButton;
     private JButton Next;
+    private JScrollPane scroll;
 
     ETicket(One2OneChannel email){
         this.eticketChannel = email;
@@ -48,7 +45,7 @@ class ETicket implements CSProcess{
             }
         });
     }
-    void showGUI(){
+    private void showGUI(){
         JFrame frame = new JFrame("E-Ticket Mail Box");
         frame.setContentPane(panel1);
         frame.setPreferredSize(new Dimension(400,200));
