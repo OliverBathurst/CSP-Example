@@ -17,6 +17,7 @@ class Departs implements CSProcess {
         this.depart = depart;
     }
 
+    @Override
     public void run() {
         while(true){
             depart.write(1);

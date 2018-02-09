@@ -17,6 +17,7 @@ class Arrivals implements CSProcess {
         this.arrive = arrive;
     }
 
+    @Override
     public void run() {
         while(true){
             arrive.write(1);

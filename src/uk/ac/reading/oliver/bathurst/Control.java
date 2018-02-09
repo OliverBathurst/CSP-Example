@@ -11,26 +11,25 @@ import jcsp.lang.ints.One2OneChannelInt;
  * to reduce or increase available spaces.
  */
 class Control implements CSProcess {
-    private final One2OneChannelInt arrive, depart, spacesLeftChannel;
+    private final One2OneChannelInt arrive, depart;
     private final Space[] spaces = new Space[100];
     private int spacesLeft = 100;
 
-    Control(One2OneChannelInt arrive, One2OneChannelInt depart, One2OneChannelInt spacesLeftChannel) {
+    Control(One2OneChannelInt arrive, One2OneChannelInt depart) {
         this.arrive = arrive;
         this.depart = depart;
-        this.spacesLeftChannel = spacesLeftChannel;
     }
-    public void run(){
+
+    @Override
+    public void run() {
         while(true){
-            if(arrive.read() == 1 && spacesLeft != 0){
+            if(spacesLeft != 0 && arrive.read() == 1){
                 spacesLeft--;
                 System.out.println("Spaces: " + spacesLeft);
-                spacesLeftChannel.write(spacesLeft);
             }
-            if(depart.read() == 1 && spacesLeft != spaces.length){
+            if(spacesLeft != spaces.length && depart.read() == 1){
                 spacesLeft++;
                 System.out.println("Spaces: " + spacesLeft);
-                spacesLeftChannel.write(spacesLeft);
             }
         }
     }

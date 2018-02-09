@@ -5,7 +5,6 @@
 package uk.ac.reading.oliver.bathurst;
 import jcsp.lang.CSProcess;
 import jcsp.lang.One2OneChannel;
-import jcsp.lang.ints.One2OneChannelInt;
 import javax.swing.*;
 import java.awt.*;
 import java.util.HashMap;
@@ -21,7 +20,6 @@ class BookingGUI implements CSProcess {
     private final String[] numbers = new String[]{"0","1","2","3","4","5","6","7","8","9"};
     private final Random rand = new Random();
     private final HashMap<String, String> bookingReferences = new HashMap<>();//stores booking reference and car regs
-    private final One2OneChannelInt spacesLeft;//for booking and releasing a place
     private final One2OneChannel eticketChannel;
     private JPanel mainPanel;
     private JButton book;
@@ -30,9 +28,8 @@ class BookingGUI implements CSProcess {
     private JTextField email;
     private JTextField carReg;
 
-    BookingGUI(One2OneChannel eticketChannel, One2OneChannelInt spacesLeft){
+    BookingGUI(One2OneChannel eticketChannel){
         this.eticketChannel = eticketChannel;
-        this.spacesLeft = spacesLeft;
         this.setupListeners();
         this.show();
     }
@@ -50,11 +47,9 @@ class BookingGUI implements CSProcess {
         frame.setVisible(true);
     }
     private void book(){
-        if (spacesLeft.read() > 0) {
-            System.out.println("Booking");
-            eticketChannel.write(generateBookingID() + firstName.getText() + "," + lastName.getText() + ","
-                    + email.getText() + "," + carReg.getText());
-        }
+        System.out.println("Booking");
+        eticketChannel.write(generateBookingID() + firstName.getText() + "," + lastName.getText() + ","
+                + email.getText() + "," + carReg.getText());
     }
 
     private String generateBookingID(){
@@ -70,6 +65,9 @@ class BookingGUI implements CSProcess {
         return toValidate;
     }
 
+    /**
+     * Run continuously
+     */
     @Override
     public void run() {
         while(true){}
