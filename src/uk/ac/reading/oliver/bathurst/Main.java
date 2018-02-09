@@ -3,9 +3,7 @@
   Written by Oliver Bathurst <oliverbathurst12345@gmail.com>
  */
 package uk.ac.reading.oliver.bathurst;
-import jcsp.lang.CSProcess;
-import jcsp.lang.One2OneChannel;
-import jcsp.lang.Parallel;
+import jcsp.lang.*;
 import jcsp.lang.ints.One2OneChannelInt;
 
 /**
@@ -15,12 +13,13 @@ class Main {
     public static void main(String arg[]) {
         One2OneChannelInt arrive = new One2OneChannelInt();//arrive and depart channels
         One2OneChannelInt depart = new One2OneChannelInt();
+        One2OneChannelInt response = new One2OneChannelInt();
         One2OneChannel eticket = new One2OneChannel();//eticket channel, written to by GUI thread
 
         new Parallel(
 
-                new CSProcess[]{new Arrivals(arrive), new Departs(depart), new Control(arrive,depart),
-                         new Control(arrive,depart), new BookingGUI(eticket), new MailTool(eticket)}
+                new CSProcess[]{new Arrivals(arrive), new Departs(depart), new Control(arrive,depart,response),
+                        }//new BookingGUI(eticket, response, arrive), new MailTool(eticket)
 
                 ).run();//create new parallel and run
     }

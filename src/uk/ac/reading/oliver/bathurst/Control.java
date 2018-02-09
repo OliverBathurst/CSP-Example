@@ -11,25 +11,34 @@ import jcsp.lang.ints.One2OneChannelInt;
  * to reduce or increase available spaces.
  */
 class Control implements CSProcess {
-    private final One2OneChannelInt arrive, depart;
-    private final Space[] spaces = new Space[100];
-    private int spacesLeft = 100;
+    private final One2OneChannelInt arrive, depart, response;
+    private final int initialCapacity = 100;
+    private final Space[] spaces = new Space[initialCapacity];
+    private int spacesLeft = initialCapacity;
 
-    Control(One2OneChannelInt arrive, One2OneChannelInt depart) {
+    Control(One2OneChannelInt arrive, One2OneChannelInt depart, One2OneChannelInt response) {
         this.arrive = arrive;
         this.depart = depart;
+        this.response = response;
     }
 
     @Override
     public void run() {
-        while(true){
-            if(spacesLeft != 0 && arrive.read() == 1){
-                spacesLeft--;
-                System.out.println("Spaces: " + spacesLeft);
-            }
-            if(spacesLeft != spaces.length && depart.read() == 1){
+        for(int i = 0; i < initialCapacity; i++) {
+            this.spaces[i] = new Space();
+        }
+        while(true) {
+            if (spacesLeft != spaces.length && depart.read() == 33) {
+                System.out.println("releasing: " + spacesLeft);
+                spaces[spacesLeft].release();
                 spacesLeft++;
-                System.out.println("Spaces: " + spacesLeft);
+                System.out.println("spaces left: " + spacesLeft);
+            }
+            if (spacesLeft != 0 && arrive.read() == 66) {
+                System.out.println("reserving: " + spacesLeft);
+                spaces[spacesLeft-1].reserve();
+                spacesLeft--;
+                System.out.println("spaces left: " + spacesLeft);
             }
         }
     }

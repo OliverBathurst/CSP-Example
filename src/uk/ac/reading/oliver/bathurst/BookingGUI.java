@@ -5,6 +5,7 @@
 package uk.ac.reading.oliver.bathurst;
 import jcsp.lang.CSProcess;
 import jcsp.lang.One2OneChannel;
+import jcsp.lang.ints.One2OneChannelInt;
 import javax.swing.*;
 import java.awt.*;
 import java.util.HashMap;
@@ -21,6 +22,7 @@ class BookingGUI implements CSProcess {
     private final Random rand = new Random();
     private final HashMap<String, String> bookingReferences = new HashMap<>();//stores booking reference and car regs
     private final One2OneChannel eticketChannel;
+    private final One2OneChannelInt responseChannel, arrive;
     private JPanel mainPanel;
     private JButton book;
     private JTextField firstName;
@@ -28,8 +30,10 @@ class BookingGUI implements CSProcess {
     private JTextField email;
     private JTextField carReg;
 
-    BookingGUI(One2OneChannel eticketChannel){
+    BookingGUI(One2OneChannel eticketChannel, One2OneChannelInt response, One2OneChannelInt arrive){
         this.eticketChannel = eticketChannel;
+        this.responseChannel = response;
+        this.arrive = arrive;
         this.setupListeners();
         this.show();
     }
@@ -46,6 +50,7 @@ class BookingGUI implements CSProcess {
         frame.pack();
         frame.setVisible(true);
     }
+
     private void book(){
         System.out.println("Booking");
         eticketChannel.write(generateBookingID() + firstName.getText() + "," + lastName.getText() + ","
