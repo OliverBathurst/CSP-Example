@@ -6,7 +6,6 @@ package uk.ac.reading.oliver.bathurst;
 import jcsp.lang.CSProcess;
 import jcsp.lang.One2OneChannel;
 import jcsp.lang.ints.One2OneChannelInt;
-
 import javax.swing.*;
 import java.awt.*;
 import java.util.HashMap;
@@ -31,7 +30,8 @@ class BookingGUI implements CSProcess {
     private JTextField email;
     private JTextField carReg;
 
-    BookingGUI(One2OneChannel eticketChannel, One2OneChannelInt bookingChannel, One2OneChannelInt responseChannel){
+    BookingGUI(One2OneChannel eticketChannel, One2OneChannelInt bookingChannel,
+               One2OneChannelInt responseChannel){
         this.eticketChannel = eticketChannel;
         this.bookingChannel = bookingChannel;
         this.responseChannel = responseChannel;
@@ -54,10 +54,14 @@ class BookingGUI implements CSProcess {
 
     private void book(){
         bookingChannel.write(3);
+
         if(responseChannel.read() != 4) {
             System.out.println("Booking");
             eticketChannel.write(generateBookingID() + firstName.getText() + "," + lastName.getText() + ","
                     + email.getText() + "," + carReg.getText());
+        }else{
+            JOptionPane.showMessageDialog(null, "No spaces available");
+            System.out.println("Booking failed, no spaces available");
         }
     }
 

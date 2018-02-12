@@ -19,9 +19,9 @@ class Main {
 
         new Parallel(
 
-                new CSProcess[]{new Arrivals(arrive), new Departs(depart), new Control(arrive,depart,bookingChannel,response),
-                        new BookingGUI(eticket, bookingChannel, response), new MailTool(eticket)}
-
+                new CSProcess[]{new Arrivals(arrive), new Departs(depart), new Control(arrive, depart, bookingChannel, response)
+                        //, new BookingGUI(eticket, bookingChannel, response), new MailTool(eticket)}
+                }
                 ).run();//create new parallel and run
     }
 }
