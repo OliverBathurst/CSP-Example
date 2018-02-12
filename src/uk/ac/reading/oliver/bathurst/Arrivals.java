@@ -20,7 +20,7 @@ class Arrivals implements CSProcess {
     @Override
     public void run() {
         while(true){
-            arrive.write(66);
+            arrive.write(2);
         }
     }
 }

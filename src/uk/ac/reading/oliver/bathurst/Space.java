@@ -1,9 +1,17 @@
 package uk.ac.reading.oliver.bathurst;
 
 class Space {
-    private boolean isReserved = false;
+    private boolean isReserved = false, isTaken = false;
 
     Space(){}
+
+    void setTaken(boolean taken){
+        isTaken = taken;
+    }
+
+    boolean isTaken(){
+        return isTaken;
+    }
 
     boolean isSpaceReserved(){
         return isReserved;
@@ -11,8 +19,5 @@ class Space {
 
     void reserve(){
         isReserved = true;
-    }
-    void release(){
-        isReserved = false;
     }
 }

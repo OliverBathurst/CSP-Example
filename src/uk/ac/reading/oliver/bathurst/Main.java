@@ -14,12 +14,13 @@ class Main {
         One2OneChannelInt arrive = new One2OneChannelInt();//arrive and depart channels
         One2OneChannelInt depart = new One2OneChannelInt();
         One2OneChannelInt response = new One2OneChannelInt();
+        One2OneChannelInt bookingChannel = new One2OneChannelInt();
         One2OneChannel eticket = new One2OneChannel();//eticket channel, written to by GUI thread
 
         new Parallel(
 
-                new CSProcess[]{new Arrivals(arrive), new Departs(depart), new Control(arrive,depart,response),
-                        }//new BookingGUI(eticket, response, arrive), new MailTool(eticket)
+                new CSProcess[]{new Arrivals(arrive), new Departs(depart), new Control(arrive,depart,bookingChannel,response),
+                        new BookingGUI(eticket, bookingChannel, response), new MailTool(eticket)}
 
                 ).run();//create new parallel and run
     }
