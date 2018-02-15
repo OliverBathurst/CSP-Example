@@ -3,10 +3,8 @@
   Written by Oliver Bathurst <oliverbathurst12345@gmail.com>
  */
 package uk.ac.reading.oliver.bathurst;
-import jcsp.lang.CSProcess;
-import jcsp.lang.ints.AlternativeInt;
-import jcsp.lang.ints.AltingChannelInputInt;
-import jcsp.lang.ints.One2OneChannelInt;
+
+import org.jcsp.lang.*;
 
 /**
  * This class controls the spaces within the car park, reads from both depart and arrive channels
@@ -31,39 +29,39 @@ class Control implements CSProcess {
         for(int i = 0; i < initialCapacity; i++) {
             this.spaces[i] = new Space();
         }
-        AlternativeInt alt = new AlternativeInt();
-        AltingChannelInputInt[] altChannels = {arrive, depart, bookingChannel};
+
+        Alternative alt = new Alternative(new Guard[]{depart.in(),arrive.in(),bookingChannel.in()});
 
         while(true) {
-            switch(alt.select(altChannels)){
+            switch(alt.priSelect()){
                 case 0:
-                    if(altChannels[0].read() == 2 && spacesLeft != 0){
-                        if(arrive()){
-                            System.out.println("Successful arrival");
-                            this.recomputeSpaces();
-                        }
-                    }
-                    break;
-                case 1:
-                    if(altChannels[1].read() == 1 && spacesLeft != initialCapacity) {
+                    if(depart.in().read() == 1 && spacesLeft != initialCapacity) {
                         if (depart()) {
                             System.out.println("Successful departure");
                             this.recomputeSpaces();
                         }
                     }
                     break;
+                case 1:
+                    if(arrive.in().read() == 2 && spacesLeft != 0){
+                        if(arrive()){
+                            System.out.println("Successful arrival");
+                            this.recomputeSpaces();
+                        }
+                    }
+                    break;
                 case 2:
-                    if(altChannels[2].read() == 3){
+                    if(bookingChannel.in().read() == 3){
                         if(spacesLeft != 0) {
                             if (reserve()) {
-                                responseChannel.write(99);//randomly chosen int (not 4)
+                                responseChannel.out().write(99);//randomly chosen int (not 4)
                                 System.out.println("Successful reservation");
                                 this.recomputeSpaces();
                             }else{
-                                responseChannel.write(4);
+                                responseChannel.out().write(4);
                             }
                         }else{
-                            responseChannel.write(4);
+                            responseChannel.out().write(4);
                         }
                     }
                     break;

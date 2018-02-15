@@ -1,9 +1,8 @@
 package uk.ac.reading.oliver.bathurst;
+import org.jcsp.lang.CSProcess;
+import org.jcsp.lang.One2OneChannel;
 
-import jcsp.lang.CSProcess;
-import jcsp.lang.One2OneChannel;
-
-class ETicketMailBag implements CSProcess{
+class ETicketMailBag implements CSProcess {
     private final One2OneChannel eticketChannel, unit;
 
     ETicketMailBag(One2OneChannel eticketReceipt, One2OneChannel unit){
@@ -13,7 +12,7 @@ class ETicketMailBag implements CSProcess{
     @Override
     public void run() {
         while(true){
-            unit.write(eticketChannel.read());
+            unit.out().write(eticketChannel.in().read());
         }
     }
 }

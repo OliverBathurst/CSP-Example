@@ -3,9 +3,8 @@
   Written by Oliver Bathurst <oliverbathurst12345@gmail.com>
  */
 package uk.ac.reading.oliver.bathurst;
-import jcsp.lang.CSProcess;
-import jcsp.lang.One2OneChannel;
-import jcsp.lang.ints.One2OneChannelInt;
+import org.jcsp.lang.One2OneChannel;
+import org.jcsp.lang.One2OneChannelInt;
 import javax.swing.*;
 import java.awt.*;
 import java.util.HashMap;
@@ -16,7 +15,7 @@ import java.util.Random;
  * to the appropriate channels when a place is booked or released
  * The eticket channel is written to after booking, to produce an electronic ticket for the user
  */
-class BookingGUI implements CSProcess {
+class BookingGUI {
     private final String[] alphabet = new String[]{"A","B","C","D","E","F","G","H","I","J","K","L","M","N","O", "P","Q","R","S","T","U","W","X","Y","Z"};
     private final String[] numbers = new String[]{"0","1","2","3","4","5","6","7","8","9"};
     private final Random rand = new Random();
@@ -53,11 +52,11 @@ class BookingGUI implements CSProcess {
     }
 
     private void book(){
-        bookingChannel.write(3);
+        bookingChannel.out().write(3);
 
-        if(responseChannel.read() != 4) {
+        if(responseChannel.in().read() != 4) {
             System.out.println("Booking");
-            eticketChannel.write(generateBookingID() + firstName.getText() + "," + lastName.getText() + ","
+            eticketChannel.out().write(generateBookingID() + firstName.getText() + "," + lastName.getText() + ","
                     + email.getText() + "," + carReg.getText());
         }else{
             JOptionPane.showMessageDialog(null, "No spaces available");
@@ -76,13 +75,5 @@ class BookingGUI implements CSProcess {
         }
         bookingReferences.put(toValidate, carReg.getText());
         return toValidate;
-    }
-
-    /**
-     * Run continuously
-     */
-    @Override
-    public void run() {
-        while(true){}
     }
 }

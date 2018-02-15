@@ -3,8 +3,8 @@
   Written by Oliver Bathurst <oliverbathurst12345@gmail.com>
  */
 package uk.ac.reading.oliver.bathurst;
-import jcsp.lang.CSProcess;
-import jcsp.lang.One2OneChannel;
+import org.jcsp.lang.CSProcess;
+import org.jcsp.lang.One2OneChannel;
 import javax.swing.*;
 import java.awt.*;
 
@@ -13,7 +13,7 @@ import java.awt.*;
  * The booking GUI class writes to the eticket channel once a booking has been placed,
  * this class then reads said channel and produces an eticket with the provided information.
  */
-class ETicketGUI implements CSProcess{
+class ETicketGUI implements CSProcess {
     private final DefaultListModel<String> listModel = new DefaultListModel<>();
     private final One2OneChannel unitChannel;
     private JPanel panel1;
@@ -56,7 +56,7 @@ class ETicketGUI implements CSProcess{
     @Override
     public void run() {
         while (true) {//wait for incoming booking references and add to the mail bag (list)}
-            listModel.addElement(unitChannel.read().toString());
+            listModel.addElement(unitChannel.in().read().toString());
         }
     }
 }

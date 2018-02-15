@@ -3,8 +3,9 @@
   Written by Oliver Bathurst <oliverbathurst12345@gmail.com>
  */
 package uk.ac.reading.oliver.bathurst;
-import jcsp.lang.CSProcess;
-import jcsp.lang.ints.One2OneChannelInt;
+
+import org.jcsp.lang.CSProcess;
+import org.jcsp.lang.One2OneChannelInt;
 
 /**
  * This class infinitely writes a single integer to the depart channel to simulate departing cars
@@ -20,7 +21,7 @@ class Departs implements CSProcess {
     @Override
     public void run() {
         while(true){
-            depart.write(1);
+            depart.out().write(1);
         }
     }
 }

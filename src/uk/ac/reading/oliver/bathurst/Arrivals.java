@@ -3,8 +3,8 @@
   Written by Oliver Bathurst <oliverbathurst12345@gmail.com>
  */
 package uk.ac.reading.oliver.bathurst;
-import jcsp.lang.CSProcess;
-import jcsp.lang.ints.One2OneChannelInt;
+import org.jcsp.lang.CSProcess;
+import org.jcsp.lang.One2OneChannelInt;
 
 /**
  * This class infinitely writes a single integer to the arrive channel to simulate arriving cars
@@ -20,7 +20,7 @@ class Arrivals implements CSProcess {
     @Override
     public void run() {
         while(true){
-            arrive.write(2);
+            arrive.out().write(2);
         }
     }
 }
