@@ -10,12 +10,11 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/Desktop/CS/jcspclasses.jar!/" />
+          <root url="jar://$USER_HOME$/Desktop/Coursework/CS/jcspclasses.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="library" name="jcspclasses" level="project" />
   </component>
 </module>
