@@ -3,7 +3,6 @@
   Written by Oliver Bathurst <oliverbathurst12345@gmail.com>
  */
 package uk.ac.reading.oliver.bathurst;
-
 import org.jcsp.lang.*;
 
 /**
@@ -13,15 +12,20 @@ class Main {
     public static void main(String arg[]) {
         One2OneChannelInt arrive = Channel.one2oneInt();
         One2OneChannelInt depart = Channel.one2oneInt();
-        One2OneChannelInt response = Channel.one2oneInt();
-        One2OneChannelInt bookingChannel = Channel.one2oneInt();//arrive and depart channels
-        One2OneChannel eticket = Channel.one2one();//eticket channel, written to by GUI thread
 
-        //new BookingGUI(eticket, bookingChannel, response);
+        One2OneChannel bookingChannel = Channel.one2one();
+        One2OneChannel eticket = Channel.one2one();//eticket channel, written to by GUI thread
+        One2OneChannel receipt = Channel.one2one();
+
+        One2OneChannel request = Channel.one2one();
+        One2OneChannel response = Channel.one2one();
+
+        One2OneChannel unitChannel = Channel.one2one();
 
         new Parallel(
-                new CSProcess[]{new Arrivals(arrive), new Departs(depart), new Control(arrive, depart, bookingChannel, response),
-                         //new MailTool(eticket)
+                new CSProcess[]{new Customer(receipt), new Arrivals(arrive), new Departs(depart), new Control(arrive, depart, request, response),
+                        new Booking(bookingChannel, eticket, request, response), new ETicketMailBag(eticket, unitChannel, receipt),
+                        new ETicketGUI(unitChannel), new BookingGUI(bookingChannel)
                 }).run();
     }
 }

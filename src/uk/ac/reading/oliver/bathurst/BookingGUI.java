@@ -3,43 +3,56 @@
   Written by Oliver Bathurst <oliverbathurst12345@gmail.com>
  */
 package uk.ac.reading.oliver.bathurst;
+import org.jcsp.awt.ActiveFrame;
+import org.jcsp.lang.CSProcess;
 import org.jcsp.lang.One2OneChannel;
-import org.jcsp.lang.One2OneChannelInt;
 import javax.swing.*;
-import java.awt.*;
-import java.util.HashMap;
-import java.util.Random;
+import java.awt.*;;
 
 /**
  * This class is responsible for displaying the booking GUI and writing
  * to the appropriate channels when a place is booked or released
  * The eticket channel is written to after booking, to produce an electronic ticket for the user
  */
-class BookingGUI {
-    private final String[] alphabet = new String[]{"A","B","C","D","E","F","G","H","I","J","K","L","M","N","O", "P","Q","R","S","T","U","W","X","Y","Z"};
-    private final String[] numbers = new String[]{"0","1","2","3","4","5","6","7","8","9"};
-    private final Random rand = new Random();
-    private final HashMap<String, String> bookingReferences = new HashMap<>();//stores booking reference and car regs
-    private final One2OneChannelInt bookingChannel, responseChannel;
-    private final One2OneChannel eticketChannel;
-    private JPanel mainPanel;
-    private JButton book;
-    private JTextField firstName;
-    private JTextField lastName;
-    private JTextField email;
-    private JTextField carReg;
+class BookingGUI implements CSProcess{
+    private final One2OneChannel bookingChannel;
+    private ActiveFrame frame;
+    private javax.swing.JPanel mainPanel;
+    private javax.swing.JButton book;
+    private javax.swing.JTextArea firstName, lastName, email, carReg;
+    private JTextField startTime;
+    private JTextField dateField;
+    private JLabel Date;
+    private JTextField endTime;
 
-    BookingGUI(One2OneChannel eticketChannel, One2OneChannelInt bookingChannel,
-               One2OneChannelInt responseChannel){
-        this.eticketChannel = eticketChannel;
+    BookingGUI(One2OneChannel bookingChannel){
         this.bookingChannel = bookingChannel;
-        this.responseChannel = responseChannel;
         this.setupListeners();
         this.show();
     }
 
     private void setupListeners(){
         book.addActionListener(e -> book());
+    }
+    private void book(){
+        if(firstName.getText().length() > 0 || lastName.getText().trim().length() > 0){
+            if(email.getText().trim().length() > 0){
+                if(carReg.getText().trim().length() > 0){
+                    if(dateField.getText().trim().length() > 0 && startTime.getText().trim().length() > 0 && endTime.getText().trim().length() > 0){
+                        bookingChannel.out().write(firstName.getText() + "," + lastName.getText() + "," + email.getText() + "," + carReg.getText()
+                                + "," + dateField.getText() + "," + startTime.getText() + "," + endTime.getText());
+                    }else{
+                        JOptionPane.showMessageDialog(null, "Times are required and date in DD/MM/YYYY");
+                    }
+                }else{
+                    JOptionPane.showMessageDialog(null, "Enter car registration");
+                }
+            }else{
+                JOptionPane.showMessageDialog(null, "An email is required");
+            }
+        }else{
+            JOptionPane.showMessageDialog(null, "At least one name required");
+        }
     }
 
     private void show(){
@@ -51,29 +64,8 @@ class BookingGUI {
         frame.setVisible(true);
     }
 
-    private void book(){
-        bookingChannel.out().write(3);
-
-        if(responseChannel.in().read() != 4) {
-            System.out.println("Booking");
-            eticketChannel.out().write(generateBookingID() + firstName.getText() + "," + lastName.getText() + ","
-                    + email.getText() + "," + carReg.getText());
-        }else{
-            JOptionPane.showMessageDialog(null, "No spaces available");
-            System.out.println("Booking failed, no spaces available");
-        }
-    }
-
-    private String generateBookingID(){
-        String toValidate = String.valueOf(alphabet[rand.nextInt(alphabet.length)] + alphabet[rand.nextInt(alphabet.length)] +
-                numbers[rand.nextInt(numbers.length)] + numbers[rand.nextInt(numbers.length)] +
-                alphabet[rand.nextInt(alphabet.length)] + alphabet[rand.nextInt(alphabet.length)] +
-                numbers[rand.nextInt(numbers.length)] + numbers[rand.nextInt(numbers.length)]);
-
-        if(bookingReferences.containsKey(toValidate)){
-            generateBookingID();
-        }
-        bookingReferences.put(toValidate, carReg.getText());
-        return toValidate;
+    @Override
+    public void run() {
+        while(true) {}
     }
 }
