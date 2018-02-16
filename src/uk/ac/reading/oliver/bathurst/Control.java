@@ -4,7 +4,6 @@
  */
 package uk.ac.reading.oliver.bathurst;
 import org.jcsp.lang.*;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
