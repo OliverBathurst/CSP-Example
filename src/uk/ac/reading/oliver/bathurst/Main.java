@@ -10,8 +10,8 @@ import org.jcsp.lang.*;
  */
 class Main {
     public static void main(String arg[]) {
-        One2OneChannelInt arrive = Channel.one2oneInt();
-        One2OneChannelInt depart = Channel.one2oneInt();
+        One2OneChannel arrive = Channel.one2one();
+        One2OneChannel depart = Channel.one2one();
 
         One2OneChannel bookingChannel = Channel.one2one();
         One2OneChannel eticket = Channel.one2one();//eticket channel, written to by GUI thread
@@ -23,7 +23,7 @@ class Main {
         One2OneChannel unitChannel = Channel.one2one();
 
         new Parallel(
-                new CSProcess[]{new Customer(receipt), new Arrivals(arrive), new Departs(depart), new Control(arrive, depart, request, response),
+                new CSProcess[]{new Customer(receipt, arrive, depart), new Arrivals(arrive), new Departs(depart), new Control(arrive, depart, request, response),
                         new Booking(bookingChannel, eticket, request, response), new ETicketMailBag(eticket, unitChannel, receipt),
                         new ETicketGUI(unitChannel), new BookingGUI(bookingChannel)
                 }).run();

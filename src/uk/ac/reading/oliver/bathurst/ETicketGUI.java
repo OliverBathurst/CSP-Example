@@ -13,7 +13,7 @@ import java.awt.*;
  * The booking GUI class writes to the eticket channel once a booking has been placed,
  * this class then reads said channel and produces an eticket with the provided information.
  */
-public class ETicketGUI implements CSProcess {
+class ETicketGUI implements CSProcess {
     private final DefaultListModel<String> listModel = new DefaultListModel<>();
     private final One2OneChannel unitChannel;
     private JPanel panel1;
@@ -55,13 +55,13 @@ public class ETicketGUI implements CSProcess {
     }
     @Override
     public void run() {
-        while (true) {//wait for incoming booking references and add to the mail bag (list)
+        while(true) {//wait for incoming booking references and add to the mail bag (list)
             listModel.addElement(parse(unitChannel.in().read().toString()));
         }
     }
-    String parse(String str){
-        String[] splitted = str.split(",");
-        return "Booking reference: " + splitted[8] + ", Space number: " + splitted[9];
+    private String parse(String str){
+        String[] split = str.split(",");
+        return "Booking reference: " + split[8] + ", Space number: " + split[9];
 
     }
 }

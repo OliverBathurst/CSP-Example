@@ -21,13 +21,12 @@ class Control implements CSProcess {
     private final String[] numbers = new String[]{"0","1","2","3","4","5","6","7","8","9"};
     private final Random rand = new Random();
 
-    private final One2OneChannelInt arrive, depart;
-    private final One2OneChannel requestChannel, responseChannel;
+    private final One2OneChannel arrive, depart, requestChannel, responseChannel;
     private final int initialCapacity = 100;
     private final Space[] spaces = new Space[initialCapacity];
     private int spacesLeft = initialCapacity;
 
-    Control(One2OneChannelInt arrive, One2OneChannelInt depart, One2OneChannel request, One2OneChannel responseChannel) {
+    Control(One2OneChannel arrive, One2OneChannel depart, One2OneChannel request, One2OneChannel responseChannel) {
         this.arrive = arrive;
         this.depart = depart;
         this.requestChannel = request;
@@ -37,7 +36,7 @@ class Control implements CSProcess {
     @Override
     public void run() {
         for(int i = 0; i < initialCapacity; i++) {
-            this.spaces[i] = new Space(i);
+            this.spaces[i] = new Space();
         }
 
         Alternative alt = new Alternative(new Guard[]{depart.in(),arrive.in(), requestChannel.in()});
@@ -45,25 +44,32 @@ class Control implements CSProcess {
         while(true) {
             switch(alt.priSelect()){
                 case 0:
-                    if(depart.in().read() == 1 && spacesLeft != initialCapacity) {
+                    String departString = depart.in().read().toString();
+                    if(departString.equals("generic depart") && spacesLeft != initialCapacity) {
                         if (depart()) {
                             this.recomputeSpaces();
                         }
+                    }else if(!departString.equals("generic depart")){
+                        bookingReferences.get(departString).setReserved(false);//set false to false, owner is leaving
+                        bookingReferences.remove(departString);//remove the reference, owner of space has left
                     }
                     break;
                 case 1:
-                    if(arrive.in().read() == 2 && spacesLeft != 0){
+                    String arriveString = arrive.in().read().toString();
+                    if(arriveString.equals("generic arrive") && spacesLeft != 0){
                         if(arrive()){
                             this.recomputeSpaces();
                         }
+                    }else if(!arriveString.equals("generic arrive")){//reserved space owner arrives
+                        bookingReferences.get(arriveString).setReserved(true);//get space number using booking reference, set to reserved, owner of space has arrived
                     }
                     break;
                 case 2:
                     String request = requestChannel.in().read().toString();
                     if(spacesLeft != 0) {
                         int spaceIndex = reserve(request);
-                        if (spaceIndex != -1) {
 
+                        if (spaceIndex != -1) {
                             String reference = generateBookingID();
                             bookingReferences.put(reference, spaces[spaceIndex]);//store booking
 

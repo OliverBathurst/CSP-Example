@@ -6,8 +6,8 @@ package uk.ac.reading.oliver.bathurst;
 import org.jcsp.lang.CSProcess;
 import org.jcsp.lang.One2OneChannel;
 
-public class Booking implements CSProcess {
-    private One2OneChannel booking, eTicket, request, response;
+class Booking implements CSProcess {
+    private final One2OneChannel booking, eTicket, request, response;
 
     Booking(One2OneChannel booking, One2OneChannel eTicket, One2OneChannel request, One2OneChannel response){
         this.booking = booking;

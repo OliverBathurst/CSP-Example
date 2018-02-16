@@ -6,16 +6,17 @@
 package uk.ac.reading.oliver.bathurst;
 import org.jcsp.lang.CSProcess;
 import org.jcsp.lang.One2OneChannel;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class Customer implements CSProcess{
+class Customer implements CSProcess{
     private final SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm");
-    private One2OneChannel receipt;
+    private final One2OneChannel receipt, arrive, depart;
 
-    Customer(One2OneChannel receipt) {
+    Customer(One2OneChannel receipt, One2OneChannel arrive, One2OneChannel depart) {
         this.receipt = receipt;
+        this.arrive = arrive;
+        this.depart = depart;
     }
 
     @Override
@@ -39,6 +40,7 @@ public class Customer implements CSProcess{
             while (!(start.getTime() <= new Date().getTime())){}
 
             //arrive with booking ref
+            arrive.out().write(ref);
 
             System.out.println("Waiting for departure at: " + receiptData[7] + " on date: " + receiptData[6]);
 
@@ -46,6 +48,7 @@ public class Customer implements CSProcess{
             while (!(end.getTime() >= new Date().getTime())){}
 
             //depart with booking ref
+            depart.out().write(ref);
 
             //finish
         }

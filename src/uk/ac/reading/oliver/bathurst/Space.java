@@ -4,16 +4,9 @@ import java.util.Date;
 
 class Space {
     private boolean isReserved = false, isTaken = false;
-    private ArrayList<Pair> reserveTimes = new ArrayList<>();
+    private final ArrayList<Pair> reserveTimes = new ArrayList<>();
 
-    private int index;
-    private Date start, end;
-
-    Space(int i){this.index = i;}
-
-    int getSpaceNumber(){
-        return index;
-    }
+    Space(){}
 
     void setTaken(boolean taken){
         isTaken = taken;
@@ -21,6 +14,10 @@ class Space {
 
     boolean isTaken(){
         return isTaken;
+    }
+
+    void setReserved(boolean value){
+        this.isReserved = value;
     }
 
     boolean isSpaceReserved(){
@@ -37,8 +34,9 @@ class Space {
         for(Pair p : reserveTimes){
             long startLong = p.getFirst().getTime();
             long endLong = p.getSecond().getTime();
+
             if (start.getTime() >= startLong && finish.getTime() <= endLong) {
-                success = false;
+                success = false;//time unavailable, conflicts
                 break;
             }
         }
@@ -46,13 +44,5 @@ class Space {
             reserveTimes.add(new Pair(start, finish));
         }
         return success;
-    }
-
-    Date getStartDate(){
-        return start;
-    }
-
-    Date getEndDate(){
-        return end;
     }
 }

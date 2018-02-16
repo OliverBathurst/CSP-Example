@@ -7,7 +7,7 @@ import org.jcsp.awt.ActiveFrame;
 import org.jcsp.lang.CSProcess;
 import org.jcsp.lang.One2OneChannel;
 import javax.swing.*;
-import java.awt.*;;
+import java.awt.*;
 
 /**
  * This class is responsible for displaying the booking GUI and writing

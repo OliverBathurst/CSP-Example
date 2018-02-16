@@ -4,23 +4,23 @@
  */
 package uk.ac.reading.oliver.bathurst;
 import org.jcsp.lang.CSProcess;
-import org.jcsp.lang.One2OneChannelInt;
+import org.jcsp.lang.One2OneChannel;
 
 /**
  * This class infinitely writes a single integer to the arrive channel to simulate arriving cars
  * The channel is read by Control and spaces managed
  */
 class Arrivals implements CSProcess {
-    private final One2OneChannelInt arrive;
+    private final One2OneChannel arrive;
 
-    Arrivals(One2OneChannelInt arrive){
+    Arrivals(One2OneChannel arrive){
         this.arrive = arrive;
     }
 
     @Override
     public void run() {
         while(true){
-            arrive.out().write(2);
+            arrive.out().write("generic arrive");
         }
     }
 }
