@@ -24,6 +24,8 @@ class BookingGUI implements CSProcess{
     private JTextField dateField;
     private JLabel Date;
     private JTextField endTime;
+    private JTextField endDate;
+    private JLabel end;
 
     BookingGUI(One2OneChannel bookingChannel){
         this.bookingChannel = bookingChannel;
@@ -40,7 +42,7 @@ class BookingGUI implements CSProcess{
                 if(carReg.getText().trim().length() > 0){
                     if(dateField.getText().trim().length() > 0 && startTime.getText().trim().length() > 0 && endTime.getText().trim().length() > 0){
                         bookingChannel.out().write(firstName.getText() + "," + lastName.getText() + "," + email.getText() + "," + carReg.getText()
-                                + "," + dateField.getText() + "," + startTime.getText() + "," + endTime.getText());
+                                + "," + dateField.getText() + "," + startTime.getText() + "," + endDate.getText() + "," + endTime.getText());
                     }else{
                         JOptionPane.showMessageDialog(null, "Times are required and date in DD/MM/YYYY");
                     }

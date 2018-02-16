@@ -5,6 +5,9 @@
 package uk.ac.reading.oliver.bathurst;
 import org.jcsp.lang.*;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Random;
 
@@ -13,10 +16,11 @@ import java.util.Random;
  * to reduce or increase available spaces.
  */
 class Control implements CSProcess {
+    private final HashMap<String, Space> bookingReferences = new HashMap<>();//stores booking reference and car regs
+    private final SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm");
     private final String[] alphabet = new String[]{"A","B","C","D","E","F","G","H","I","J","K","L","M","N","O", "P","Q","R","S","T","U","W","X","Y","Z"};
     private final String[] numbers = new String[]{"0","1","2","3","4","5","6","7","8","9"};
     private final Random rand = new Random();
-    private final HashMap<String, String> bookingReferences = new HashMap<>();//stores booking reference and car regs
 
     private final One2OneChannelInt arrive, depart;
     private final One2OneChannel requestChannel, responseChannel;
@@ -34,7 +38,7 @@ class Control implements CSProcess {
     @Override
     public void run() {
         for(int i = 0; i < initialCapacity; i++) {
-            this.spaces[i] = new Space();
+            this.spaces[i] = new Space(i);
         }
 
         Alternative alt = new Alternative(new Guard[]{depart.in(),arrive.in(), requestChannel.in()});
@@ -56,17 +60,21 @@ class Control implements CSProcess {
                     }
                     break;
                 case 2:
-                    if(!requestChannel.in().read().toString().equals("")){
-                        if(spacesLeft != 0) {
-                            if (reserve()) {
-                                responseChannel.out().write("Successful reservation");//randomly chosen int (not 4)
-                                this.recomputeSpaces();
-                            }else{
-                                responseChannel.out().write("");//write empty (failure) string
-                            }
-                        }else{
+                    String request = requestChannel.in().read().toString();
+                    if(spacesLeft != 0) {
+                        int spaceIndex = reserve(request);
+                        if (spaceIndex != -1) {
+
+                            String reference = generateBookingID();
+                            bookingReferences.put(reference, spaces[spaceIndex]);//store booking
+
+                            responseChannel.out().write(reference + "," + spaceIndex);//randomly chosen int (not 4)
+                            this.recomputeSpaces();
+                        } else {
                             responseChannel.out().write("");//write empty (failure) string
                         }
+                    }else{
+                        responseChannel.out().write("");//write empty (failure) string
                     }
                     break;
             }
@@ -106,18 +114,34 @@ class Control implements CSProcess {
         }
         return success;
     }
-    private boolean reserve(){
-        boolean success = false;
-        for (Space space : spaces) {
-            if (!space.isSpaceReserved() && !space.isTaken()) {
-                space.reserve();
-                success = true;
-                break;
+    private int reserve(String info){
+        String[] information = info.split(",");
+        int index = -1;
+
+        Date start = null;
+        Date end = null;
+        try {
+            start = sdf.parse(information[4] + " " + information[5]);
+            end = sdf.parse(information[6] + " " + information[7]);
+        } catch (ParseException ignored) {}
+
+        if(start != null && end != null) {
+            for (int i = 0; i < spaces.length; i++) {
+                if (!spaces[i].isSpaceReserved() && !spaces[i].isTaken()) {
+                    spaces[i].reserve(start, end);
+                    index = i;
+                    break;
+                } else if (spaces[i].isSpaceReserved()) {
+                    if (spaces[i].tryReserve(start, end)) {
+                        index = i;
+                        break;
+                    }
+                }
             }
         }
-        return success;
+        return index;
     }
-    /*private String generateBookingID(){
+    private String generateBookingID(){
         String toValidate = String.valueOf(alphabet[rand.nextInt(alphabet.length)] + alphabet[rand.nextInt(alphabet.length)] +
                 numbers[rand.nextInt(numbers.length)] + numbers[rand.nextInt(numbers.length)] +
                 alphabet[rand.nextInt(alphabet.length)] + alphabet[rand.nextInt(alphabet.length)] +
@@ -126,7 +150,6 @@ class Control implements CSProcess {
         if(bookingReferences.containsKey(toValidate)){
             generateBookingID();
         }
-        bookingReferences.put(toValidate, carReg.getText());
         return toValidate;
-    }*/
+    }
 }

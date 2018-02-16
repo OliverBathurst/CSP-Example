@@ -20,11 +20,14 @@ public class Booking implements CSProcess {
     public void run() {
         while(true) {
             String bookingString = booking.in().read().toString();
-            request.out().write(bookingString);
-            if (!response.in().read().toString().equals("")) {
-                eTicket.out().write(bookingString);//print eticket if successful
+
+            request.out().write(bookingString);//create booking request
+            String spaceNumber = response.in().read().toString();//get space number and reference in response
+
+            if (!spaceNumber.equals("")) {//if booking successful
+                eTicket.out().write(bookingString + "," + spaceNumber);//print eticket if successful
             }else{
-                System.out.println("No spaces available");
+                System.out.println("Booking available");
             }
         }
     }

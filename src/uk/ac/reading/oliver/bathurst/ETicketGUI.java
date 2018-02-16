@@ -56,7 +56,12 @@ public class ETicketGUI implements CSProcess {
     @Override
     public void run() {
         while (true) {//wait for incoming booking references and add to the mail bag (list)
-            listModel.addElement(unitChannel.in().read().toString());
+            listModel.addElement(parse(unitChannel.in().read().toString()));
         }
+    }
+    String parse(String str){
+        String[] splitted = str.split(",");
+        return "Booking reference: " + splitted[8] + ", Space number: " + splitted[9];
+
     }
 }
