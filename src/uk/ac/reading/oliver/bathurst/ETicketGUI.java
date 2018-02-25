@@ -6,7 +6,6 @@ package uk.ac.reading.oliver.bathurst;
 import org.jcsp.lang.CSProcess;
 import org.jcsp.lang.One2OneChannel;
 import javax.swing.*;
-import java.awt.*;
 
 /**
  * This class simulates the production of an electronic ticket after a booking has been made.
