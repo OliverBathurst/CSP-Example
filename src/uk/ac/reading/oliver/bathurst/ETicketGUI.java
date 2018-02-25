@@ -48,20 +48,20 @@ class ETicketGUI implements CSProcess {
     private void showGUI(){
         JFrame frame = new JFrame("E-Ticket Mail Box");
         frame.setContentPane(panel1);
-        frame.setPreferredSize(new Dimension(400,200));
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);
     }
     @Override
     public void run() {
+
         while(true) {//wait for incoming booking references and add to the mail bag (list)
-            listModel.addElement(parse(unitChannel.in().read().toString()));
+            listModel.addElement(parse((BookingDetailsObject) unitChannel.in().read()));
         }
     }
-    private String parse(String str){
-        String[] split = str.split(",");
-        return "Booking reference: " + split[8] + ", Space number: " + split[9];
-
+    private String parse(BookingDetailsObject obj){
+        return "Name: " + obj.getFirstName() + ", " + obj.getLastName() +
+                " Car Registration: " + obj.getCarReg() + ", Email: " + obj.getEmail() +
+                " Booking reference: " + obj.getBookingReference() + ", Space number: " + obj.getParkingSpace();
     }
 }

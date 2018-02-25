@@ -4,9 +4,7 @@
  */
 package uk.ac.reading.oliver.bathurst;
 import org.jcsp.lang.*;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Random;
 
@@ -65,15 +63,15 @@ class Control implements CSProcess {
                     }
                     break;
                 case 2:
-                    String request = requestChannel.in().read().toString();
+                    BookingDetailsObject request = (BookingDetailsObject) requestChannel.in().read();
                     if(spacesLeft != 0) {
                         int spaceIndex = reserve(request);
-
                         if (spaceIndex != -1) {
                             String reference = generateBookingID();
                             bookingReferences.put(reference, spaces[spaceIndex]);//store booking
-
-                            responseChannel.out().write(reference + "," + spaceIndex);//randomly chosen int (not 4)
+                            request.setBookingReference(reference);//set customer booking ref
+                            request.setParkingSpace(spaceIndex);//set customer space number
+                            responseChannel.out().write("booking successful");//randomly chosen phrase (not "")
                             this.recomputeSpaces();
                         } else {
                             responseChannel.out().write("");//write empty (failure) string
@@ -94,7 +92,6 @@ class Control implements CSProcess {
             }
         }
         spacesLeft = counter;
-        //System.out.println("Spaces left: " + spacesLeft);
     }
 
     private boolean depart(){
@@ -119,28 +116,17 @@ class Control implements CSProcess {
         }
         return success;
     }
-    private int reserve(String info){
-        String[] information = info.split(",");
+    private int reserve(BookingDetailsObject bookingObj){
         int index = -1;
-
-        Date start = null;
-        Date end = null;
-        try {
-            start = sdf.parse(information[4] + " " + information[5]);
-            end = sdf.parse(information[6] + " " + information[7]);
-        } catch (ParseException ignored) {}
-
-        if(start != null && end != null) {
-            for (int i = 0; i < spaces.length; i++) {
-                if (!spaces[i].isSpaceReserved() && !spaces[i].isTaken()) {
-                    spaces[i].reserve(start, end);
+        for (int i = 0; i < spaces.length; i++) {
+            if (!spaces[i].isSpaceReserved() && !spaces[i].isTaken()) {
+                spaces[i].reserve(bookingObj.getStartDate(), bookingObj.getEndDate());
+                index = i;
+                break;
+            } else if (spaces[i].isSpaceReserved()) {
+                if (spaces[i].tryReserve(bookingObj.getStartDate(), bookingObj.getEndDate())) {
                     index = i;
                     break;
-                } else if (spaces[i].isSpaceReserved()) {
-                    if (spaces[i].tryReserve(start, end)) {
-                        index = i;
-                        break;
-                    }
                 }
             }
         }

@@ -13,7 +13,7 @@ class ETicketMailBag implements CSProcess {
     @Override
     public void run() {
         while(true){
-            String eticket = eticketChannel.in().read().toString();
+            BookingDetailsObject eticket = (BookingDetailsObject) eticketChannel.in().read();
             unit.out().write(eticket);//for printing to GUI
             receipt.out().write(eticket);//receipt for customer
         }

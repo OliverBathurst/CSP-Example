@@ -21,36 +21,27 @@ class Customer implements CSProcess{
 
     @Override
     public void run() {
-        String bookingReceipt = receipt.in().read().toString();//wait for receipt
-        String[] receiptData = bookingReceipt.split(",");
-        System.out.println("Receipt collected: " + bookingReceipt);
-        System.out.println("Waiting for arrival at: " + receiptData[5] + " on date: " + receiptData[4]);
+        BookingDetailsObject bookingReceipt = (BookingDetailsObject) receipt.in().read();//wait for receipt
+        System.out.println("Receipt collected");
+        System.out.println("Waiting for arrival at: " + bookingReceipt.getStartTime() + " on date: " + bookingReceipt.getStartDate());
 
-        String ref = receiptData[8];
-        Date start = null;
-        Date end = null;
+        long startDateAndTime = bookingReceipt.getFullStartDate().getTime();
+        long endDateAndTime = bookingReceipt.getFullEndDate().getTime();
 
-        try {
-            start = sdf.parse(receiptData[4] + " " + receiptData[5]);
-            end = sdf.parse(receiptData[6] + " " + receiptData[7]);
-        }catch(Exception ignored){}
+        //wait to arrive
+        while (!(startDateAndTime < new Date().getTime())){}
 
-        if(start != null && end != null) {
-            //wait to arrive
-            while (!(start.getTime() <= new Date().getTime())){}
+        //arrive with booking ref
+        arrive.out().write(bookingReceipt.getBookingReference());
 
-            //arrive with booking ref
-            arrive.out().write(ref);
+        System.out.println("Waiting for departure at: " + bookingReceipt.getEndTime() + " on date: " + bookingReceipt.getEndDate());
 
-            System.out.println("Waiting for departure at: " + receiptData[7] + " on date: " + receiptData[6]);
+        //wait to depart
+        while (!(endDateAndTime > new Date().getTime())){}
 
-            //wait to depart
-            while (!(end.getTime() >= new Date().getTime())){}
+        //depart with booking ref
+        depart.out().write(bookingReceipt.getBookingReference());
 
-            //depart with booking ref
-            depart.out().write(ref);
-
-            //finish
-        }
+        //finish
     }
 }
