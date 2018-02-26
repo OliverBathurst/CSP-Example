@@ -6,13 +6,16 @@
 package uk.ac.reading.oliver.bathurst;
 import org.jcsp.lang.CSProcess;
 import org.jcsp.lang.One2OneChannel;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 class Customer implements CSProcess{
-    private final SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm");
     private final One2OneChannel receipt, arrive, depart;
 
+    /**
+     * Customer takes the eticket channel for a receipt, uses arrive and depart channels to arrive and depart
+     * using their booking reference
+     * Customer -> receipt -> arrive -> depart -> Stop
+     */
     Customer(One2OneChannel receipt, One2OneChannel arrive, One2OneChannel depart) {
         this.receipt = receipt;
         this.arrive = arrive;
@@ -21,12 +24,12 @@ class Customer implements CSProcess{
 
     @Override
     public void run() {
-        BookingDetailsObject bookingReceipt = (BookingDetailsObject) receipt.in().read();//wait for receipt
-        System.out.println("Receipt collected");
+        BookingDetailsObject bookingReceipt = (BookingDetailsObject) receipt.in().read();//wait for receipt (their booking object with the space and booking reference added)
+        System.out.println("Receipt collected");//recognise the arrival of receipt
         System.out.println("Waiting for arrival at: " + bookingReceipt.getStartTime() + " on date: " + bookingReceipt.getStartDate());
 
-        long startDateAndTime = bookingReceipt.getFullStartDate().getTime();
-        long endDateAndTime = bookingReceipt.getFullEndDate().getTime();
+        long startDateAndTime = bookingReceipt.getFullStartDate().getTime();//get the long epoch time of the arrival time
+        long endDateAndTime = bookingReceipt.getFullEndDate().getTime();//get the long epoch time of the arrival time
 
         //wait to arrive
         while (!(startDateAndTime < new Date().getTime())){}

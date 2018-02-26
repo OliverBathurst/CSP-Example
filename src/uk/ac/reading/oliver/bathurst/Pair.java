@@ -6,6 +6,9 @@
 package uk.ac.reading.oliver.bathurst;
 import java.util.Date;
 
+/**
+ * Simple pair class used to store store start and end dates/times in a tuple object
+ */
 class Pair {
     private final Date first, second;
 

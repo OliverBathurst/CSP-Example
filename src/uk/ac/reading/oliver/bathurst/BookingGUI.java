@@ -7,7 +7,6 @@ import org.jcsp.awt.ActiveFrame;
 import org.jcsp.lang.CSProcess;
 import org.jcsp.lang.One2OneChannel;
 import javax.swing.*;
-import java.awt.*;
 import java.text.SimpleDateFormat;
 
 /**
@@ -39,6 +38,10 @@ class BookingGUI implements CSProcess{
     private void setupListeners(){
         book.addActionListener(e -> book());
     }
+
+    /**
+     * book() performs input validation and writing to the booking channel with a new BookingDetailsObject with the booking details inputted
+     */
     private void book(){
         if(firstName.getText().length() > 0 || lastName.getText().trim().length() > 0){
             if(email.getText().trim().length() > 0 && email.getText().contains("@")){
@@ -66,6 +69,9 @@ class BookingGUI implements CSProcess{
         }
     }
 
+    /**
+     * Show the GUI
+     */
     private void show(){
         JFrame frame = new JFrame("Online Booking Application");
         frame.setContentPane(mainPanel);

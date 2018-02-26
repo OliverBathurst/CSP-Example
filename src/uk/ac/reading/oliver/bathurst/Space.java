@@ -3,8 +3,8 @@ import java.util.ArrayList;
 import java.util.Date;
 
 class Space {
-    private boolean isReserved = false, isTaken = false;
-    private final ArrayList<Pair> reserveTimes = new ArrayList<>();
+    private boolean isReserved = false, isTaken = false;//initial flags
+    private final ArrayList<Pair> reserveTimes = new ArrayList<>();//pairs of reserved times for that space (start and end)
 
     Space(){}
 
@@ -24,25 +24,31 @@ class Space {
         return isReserved;
     }
 
+    /**
+     * Simply reserves the space
+     */
     void reserve(Date start, Date finish){
         reserveTimes.add(new Pair(start, finish));
         this.isReserved = true;
     }
 
+    /**
+     * Tries to reserve between two dates, if it conflicts with any this method returns false
+     */
     boolean tryReserve(Date start, Date finish){
         boolean success = true;
-        for(Pair p : reserveTimes){
-            long startLong = p.getFirst().getTime();
+        for(Pair p : reserveTimes){//iterate over all bookings for this space
+            long startLong = p.getFirst().getTime();//get the start and end times
             long endLong = p.getSecond().getTime();
 
-            if (start.getTime() >= startLong && finish.getTime() <= endLong) {
+            if (start.getTime() >= startLong && finish.getTime() <= endLong) {//if it conflicts with another reservation
                 success = false;//time unavailable, conflicts
                 break;
             }
         }
-        if(success){
-            reserveTimes.add(new Pair(start, finish));
+        if(success){//if successful (no conflictions)...
+            reserveTimes.add(new Pair(start, finish));//add to list of reservations
         }
-        return success;
+        return success;//return the flag
     }
 }

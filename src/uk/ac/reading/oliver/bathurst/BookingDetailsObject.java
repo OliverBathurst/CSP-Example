@@ -6,12 +6,20 @@
 package uk.ac.reading.oliver.bathurst;
 import java.util.Date;
 
+/**
+ * This object holds all possible variables used within a booking request
+ * Makes things neater when transporting information over channels (only transporting a single object)
+ */
+
 class BookingDetailsObject {
     private final String firstName, lastName, email, carReg, startTime, endTime;
     private final Date startDate, endDate, fullStart, fullEnd;
     private String bookingReference;
     private int spaceNumber;
 
+    /**
+     * Initialised with all information supplied within the booking GUI
+     */
     BookingDetailsObject(String firstName, String lastName, String email, String carReg, Date start, String startTime, Date end, String endTime, Date fullStart, Date fullEnd){
         this.firstName = firstName;
         this.lastName = lastName;
@@ -25,6 +33,9 @@ class BookingDetailsObject {
         this.fullEnd = fullEnd;
     }
 
+    /**
+     * Getter and setting methods used in a variety of classes
+     */
     String getEmail(){
         return email;
     }

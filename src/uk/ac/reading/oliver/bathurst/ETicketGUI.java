@@ -22,6 +22,10 @@ class ETicketGUI implements CSProcess {
     private JButton Next;
     private JScrollPane scroll;
 
+    /**
+     * Sets up the channel for eticket interception and the list used to display
+     * Also sets up listeners for filtering through bookings such as previous, next and delete
+     */
     ETicketGUI(One2OneChannel unitChannel){
         this.unitChannel = unitChannel;
         this.showGUI();
@@ -44,6 +48,10 @@ class ETicketGUI implements CSProcess {
             }
         });
     }
+
+    /**
+     * Shows the GUI
+     */
     private void showGUI(){
         JFrame frame = new JFrame("E-Ticket Mail Box");
         frame.setContentPane(panel1);
@@ -51,13 +59,21 @@ class ETicketGUI implements CSProcess {
         frame.pack();
         frame.setVisible(true);
     }
+
+    /**
+     * Waits for a booking object on the unit channel, adds to the list (simulated mail inbox)
+     * ETicketGUI -> display receipt -> ETicketGUI
+     */
     @Override
     public void run() {
-
-        while(true) {//wait for incoming booking references and add to the mail bag (list)
+        while(true) {//wait for incoming booking reference and add to the mail bag (list)
             listModel.addElement(parse((BookingDetailsObject) unitChannel.in().read()));
         }
     }
+
+    /**
+     * Extracts a sample of information from object for display on GUI
+     */
     private String parse(BookingDetailsObject obj){
         return "Name: " + obj.getFirstName() + ", " + obj.getLastName() +
                 " Car Registration: " + obj.getCarReg() + ", Email: " + obj.getEmail() +

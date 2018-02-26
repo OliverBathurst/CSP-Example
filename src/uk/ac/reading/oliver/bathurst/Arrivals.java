@@ -7,7 +7,7 @@ import org.jcsp.lang.CSProcess;
 import org.jcsp.lang.One2OneChannel;
 
 /**
- * This class infinitely writes a single integer to the arrive channel to simulate arriving cars
+ * This class indefinitely writes a single phrase to the arrive channel to simulate arriving cars
  * The channel is read by Control and spaces managed
  */
 class Arrivals implements CSProcess {
@@ -17,6 +17,10 @@ class Arrivals implements CSProcess {
         this.arrive = arrive;
     }
 
+    /**
+     * Arrivals -> arrive -> Arrivals
+     * Emulates background cars arriving at the car park
+     */
     @Override
     public void run() {
         while(true){
