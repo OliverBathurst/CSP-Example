@@ -138,15 +138,9 @@ class Control implements CSProcess {
     private int reserve(BookingDetailsObject bookingObj){
         int index = -1;//set bad index
         for (int i = 0; i < spaces.length; i++) {//iterate
-            if (!spaces[i].isSpaceReserved()) {//if space not reserved
-                spaces[i].reserve(bookingObj.getFullStartDate(), bookingObj.getFullEndDate());//reserve using dates
-                index = i;//set index of space
-                break;
-            } else if (spaces[i].isSpaceReserved()) {//if already reserved
-                if (spaces[i].tryReserve(bookingObj.getFullStartDate(), bookingObj.getFullEndDate())) {//try reserving for the dates
-                    index = i;//set index
-                    break;//break
-                }
+            if (spaces[i].tryReserve(bookingObj.getFullStartDate(), bookingObj.getFullEndDate())) {//try reserving for the dates
+                index = i;//set index
+                break;//break
             }
         }
         return index;//return space index (-1 indicates failure)
