@@ -98,6 +98,7 @@
             </constraints>
             <properties>
               <text value="14:00"/>
+              <toolTipText value="e.g. 14:00"/>
             </properties>
           </component>
           <component id="caf8d" class="javax.swing.JTextField" binding="startDate">
@@ -108,6 +109,7 @@
             </constraints>
             <properties>
               <text value="07/04/2018"/>
+              <toolTipText value="e.g. DD/MM/YYYY"/>
             </properties>
           </component>
           <component id="78b4e" class="javax.swing.JLabel" binding="Date">
@@ -142,6 +144,7 @@
             </constraints>
             <properties>
               <text value="15:00"/>
+              <toolTipText value="e.g. 14:00"/>
             </properties>
           </component>
           <component id="15813" class="javax.swing.JButton" binding="book">
@@ -160,6 +163,7 @@
             </constraints>
             <properties>
               <text value="07/04/2018"/>
+              <toolTipText value="e.g. DD/MM/YYYY"/>
             </properties>
           </component>
           <component id="62d61" class="javax.swing.JLabel" binding="end">
