@@ -42,46 +42,61 @@ class Control implements CSProcess {
         }
         //setup the Alternative Guards to alternate over the required channels
         Alternative alt = new Alternative(new Guard[]{depart.in(),arrive.in(), requestChannel.in()});
-        //enter main loop
-        while(true) {
+
+        while(true) {//enter main loop
+
+            this.recomputeSpaces();//reevaluate and set the number of spaces available by looking at the number of unreserved and untaken spaces
+
             switch(alt.priSelect()){//use pri select such that depart channel is chosen by default (if none others ready) (prevents deadlock)
                 case 0:
-                    String departString = depart.in().read().toString();//read in request as a string
-                    if(departString.equals("generic depart") && spacesLeft != initialCapacity) {//if it's a generic depart and there are cars in car park...
-                        if (depart()) {//try to depart, if successful, re evaluate spaces left
-                            this.recomputeSpaces();
+                    Object departObj = depart.in().read();//read in request as a string
+                    if(departObj.toString().equals("generic depart") && spacesLeft != initialCapacity) {//if it's a generic depart and there are cars in car park...
+                        depart();//try to depart
+                    }else if(departObj instanceof BookingDetailsObject){//if it's a booking reference, look up booking ref in hash map and get space index
+                        BookingDetailsObject bto = (BookingDetailsObject) departObj;
+                        Space space = bookingReferences.get(bto.getBookingReference());
+                        if(space != null){
+                            space.removeReservation(bto.getFullStartDate(), bto.getFullEndDate());//remove specific reservation of space, owner of space is leaving
+                            bookingReferences.remove(bto.getBookingReference());//remove the reference from booking references map, owner of space has left
+                        }else{
+                            System.out.println("Error whilst departing");
                         }
-                    }else if(!departString.equals("generic depart")){//if it's a booking reference, look up booking ref in hash map and get space index
-                        bookingReferences.get(departString).setReserved(false);//set space reserved to false, owner of space is leaving
-                        bookingReferences.remove(departString);//remove the reference, owner of space has left
                     }
                     break;
                 case 1:
                     String arriveString = arrive.in().read().toString();//read in arrival as a string
                     if(arriveString.equals("generic arrive") && spacesLeft != 0){//if there are spaces and it's a generic car arrival
-                        if(arrive()){//try to arrive
-                            this.recomputeSpaces();//re evaluate
-                        }
+                        arrive();
                     }else if(!arriveString.equals("generic arrive")){//reserved space owner arrives with booking reference
-                        bookingReferences.get(arriveString).setReserved(true);//get space number using booking reference, set to reserved, owner of space has arrived
+                        bookingReferences.get(arriveString).setReserved();//get space number using booking reference, set to reserved, owner of space has arrived
                     }
                     break;
                 case 2:
                     BookingDetailsObject request = (BookingDetailsObject) requestChannel.in().read();//read in from booking channel and cast
-                    if(spacesLeft != 0) {//if there are spaces left
-                        int spaceIndex = reserve(request);//attempt to get a space (returns a space index)
-                        if (spaceIndex != -1) {//if it's not -1 (a failure)
-                            String reference = generateBookingID();//get a booking ref
-                            bookingReferences.put(reference, spaces[spaceIndex]);//store booking in hash map
-                            request.setBookingReference(reference);//set customer booking ref in the object
-                            request.setParkingSpace(spaceIndex);//set customer space number in the object
-                            responseChannel.out().write("booking successful");//write to response channel it was successful
-                            this.recomputeSpaces();
+                    if(!request.isCustomerCancelling()) {
+                        if (spacesLeft != 0) {//if there are spaces left
+                            int spaceIndex = reserve(request);//attempt to get a space (returns a space index)
+                            if (spaceIndex != -1) {//if it's not -1 (a failure)
+                                String reference = generateBookingID();//get a booking ref
+                                bookingReferences.put(reference, spaces[spaceIndex]);//store booking and space in hash map
+                                request.setBookingReference(reference);//set customer booking ref in the object
+                                request.setParkingSpace(spaceIndex);//set customer space number in the object
+                                responseChannel.out().write("Booking successful");//write to response channel it was successful
+                            }else{
+                                responseChannel.out().write("");//write empty (failure) string
+                            }
                         } else {
                             responseChannel.out().write("");//write empty (failure) string
                         }
-                    }else{
-                        responseChannel.out().write("");//write empty (failure) string
+                    }else{//Someone has requested a cancel of their booking
+                        Space space = bookingReferences.get(request.getBookingReference());//check that the booking reference exists and returns a space
+                        if(space != null){
+                            space.removeReservation(request.getFullStartDate(), request.getFullEndDate());
+                            bookingReferences.remove(request.getBookingReference());
+                            responseChannel.out().write("Booking successfully cancelled");
+                        }else{
+                            responseChannel.out().write("Booking does not exist");
+                        }
                     }
                     break;
             }
@@ -99,37 +114,32 @@ class Control implements CSProcess {
             }
         }
         spacesLeft = counter;
+        //System.out.println("Spaces left: " + spacesLeft);
     }
 
     /**
      * Attempts to find a space that's not reserved (can be taken but not reserved)
      * if successful, set space to un taken, method returns true
      */
-    private boolean depart(){
-        boolean success = false;
+    private void depart(){
         for (Space space : spaces) {
             if (!space.isSpaceReserved() && space.isTaken()) {
                 space.setTaken(false);
-                success = true;
                 break;
             }
         }
-        return success;
     }
     /**
      * Attempts to find an empty space (is not taken or reserved)
      * if successful, set space to taken, method return true
      */
-    private boolean arrive(){
-        boolean success = false;
+    private void arrive(){
         for (Space space : spaces) {
             if (!space.isSpaceReserved() && !space.isTaken()) {
                 space.setTaken(true);
-                success = true;
                 break;
             }
         }
-        return success;
     }
     /**
      * Attempts to reserve a space, iterates over all spaces checking if each space is reserved or not

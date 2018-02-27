@@ -12,10 +12,20 @@ import java.util.Date;
  */
 
 class BookingDetailsObject {
-    private final String firstName, lastName, email, carReg, startTime, endTime;
-    private final Date startDate, endDate, fullStart, fullEnd;
+    private String firstName, lastName, email, carReg, startTime, endTime;
+    private Date startDate, endDate, fullStart, fullEnd;
     private String bookingReference;
     private int spaceNumber;
+    private boolean isReleasing = false;
+
+
+
+    BookingDetailsObject(Date fullStart, Date fullEnd, String bookingReference, boolean isReleasing){
+        this.fullStart = fullStart;
+        this.fullEnd = fullEnd;
+        this.bookingReference = bookingReference;
+        this.isReleasing = isReleasing;
+    }
 
     /**
      * Initialised with all information supplied within the booking GUI
@@ -82,6 +92,10 @@ class BookingDetailsObject {
 
     int getParkingSpace(){
         return spaceNumber;
+    }
+
+    boolean isCustomerCancelling(){
+        return isReleasing;
     }
 
     String getStartTime(){

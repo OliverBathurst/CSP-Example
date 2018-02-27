@@ -29,12 +29,17 @@ class Booking implements CSProcess {
     public void run() {
         while(true) {
             BookingDetailsObject requestObj = (BookingDetailsObject) booking.in().read();//read from booking channel, cast to obj
-            request.out().write(requestObj);//create booking request by writing to request channel which is shared with Control
 
-            if (!response.in().read().toString().equals("")) {//if booking successful...
-                eTicket.out().write(requestObj);//write booking object to eticket channel for display in GUI and customer receipt
-            }else{
-                System.out.println("Booking unavailable");//print none available
+            if(!requestObj.isCustomerCancelling()) {
+                request.out().write(requestObj);//create booking request by writing to request channel which is shared with Control
+                if (!response.in().read().toString().equals("")) {//if booking successful...
+                    eTicket.out().write(requestObj);//write booking object to eticket channel for display in GUI and customer receipt
+                } else {
+                    System.out.println("Booking unavailable");//print none available
+                }
+            }else if(requestObj.isCustomerCancelling()){
+                request.out().write(requestObj);
+                System.out.println(response.in().read().toString());
             }
         }
     }

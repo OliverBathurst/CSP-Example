@@ -3,179 +3,347 @@
   <grid id="27dc6" binding="mainPanel" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
     <margin top="0" left="0" bottom="0" right="0"/>
     <constraints>
-      <xy x="20" y="20" width="909" height="660"/>
+      <xy x="20" y="20" width="1229" height="845"/>
     </constraints>
     <properties/>
     <border type="none"/>
     <children>
-      <grid id="22d97" layout-manager="GridLayoutManager" row-count="16" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-        <margin top="0" left="0" bottom="0" right="0"/>
+      <tabbedpane id="4728d" binding="tabbedPane">
         <constraints>
           <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false">
-            <minimum-size width="100" height="100"/>
-            <preferred-size width="1200" height="1200"/>
+            <preferred-size width="200" height="200"/>
           </grid>
         </constraints>
-        <properties/>
-        <border type="none"/>
+        <properties>
+          <name value="Main Menu"/>
+        </properties>
+        <border type="bevel-raised" title="Booking GUI"/>
         <children>
-          <component id="25852" class="javax.swing.JTextArea" binding="firstName">
+          <grid id="d5a97" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+            <margin top="0" left="0" bottom="0" right="0"/>
             <constraints>
-              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
-                <preferred-size width="150" height="-1"/>
+              <tabbedpane title="Main Menu"/>
+            </constraints>
+            <properties/>
+            <border type="none"/>
+            <children>
+              <grid id="69ee9" layout-manager="GridLayoutManager" row-count="16" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                <margin top="0" left="0" bottom="0" right="0"/>
+                <constraints>
+                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false">
+                    <minimum-size width="100" height="100"/>
+                    <preferred-size width="1200" height="1200"/>
+                  </grid>
+                </constraints>
+                <properties/>
+                <border type="none"/>
+                <children>
+                  <component id="48225" class="javax.swing.JTextArea" binding="firstName">
+                    <constraints>
+                      <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                        <preferred-size width="150" height="-1"/>
+                      </grid>
+                    </constraints>
+                    <properties>
+                      <text value="FirstNameExample"/>
+                    </properties>
+                  </component>
+                  <component id="5e88c" class="javax.swing.JLabel">
+                    <constraints>
+                      <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties>
+                      <labelFor value="25852"/>
+                      <text value="First name"/>
+                    </properties>
+                  </component>
+                  <component id="228ce" class="javax.swing.JLabel">
+                    <constraints>
+                      <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties>
+                      <text value="Last name"/>
+                    </properties>
+                  </component>
+                  <component id="e70b8" class="javax.swing.JTextArea" binding="lastName">
+                    <constraints>
+                      <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                        <preferred-size width="150" height="-1"/>
+                      </grid>
+                    </constraints>
+                    <properties>
+                      <text value="LastNameExample"/>
+                    </properties>
+                  </component>
+                  <component id="ec1cb" class="javax.swing.JLabel">
+                    <constraints>
+                      <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties>
+                      <text value="Email"/>
+                    </properties>
+                  </component>
+                  <component id="4f2de" class="javax.swing.JTextArea" binding="email">
+                    <constraints>
+                      <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties>
+                      <text value="EmailExample@gmail.com"/>
+                    </properties>
+                  </component>
+                  <component id="cc736" class="javax.swing.JLabel">
+                    <constraints>
+                      <grid row="6" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties>
+                      <text value="Car Registration"/>
+                    </properties>
+                  </component>
+                  <component id="a7c71" class="javax.swing.JTextArea" binding="carReg">
+                    <constraints>
+                      <grid row="7" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                        <preferred-size width="150" height="-1"/>
+                      </grid>
+                    </constraints>
+                    <properties>
+                      <text value="BD51SMR"/>
+                    </properties>
+                  </component>
+                  <component id="25e27" class="javax.swing.JTextField" binding="startTime">
+                    <constraints>
+                      <grid row="11" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                        <preferred-size width="150" height="-1"/>
+                      </grid>
+                    </constraints>
+                    <properties>
+                      <text value="14:00"/>
+                      <toolTipText value="e.g. 14:00"/>
+                    </properties>
+                  </component>
+                  <component id="e418" class="javax.swing.JTextField" binding="startDate">
+                    <constraints>
+                      <grid row="9" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                        <preferred-size width="150" height="-1"/>
+                      </grid>
+                    </constraints>
+                    <properties>
+                      <text value="07/04/2018"/>
+                      <toolTipText value="e.g. DD/MM/YYYY"/>
+                    </properties>
+                  </component>
+                  <component id="4e06f" class="javax.swing.JLabel" binding="Date">
+                    <constraints>
+                      <grid row="8" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties>
+                      <text value="Start Date"/>
+                    </properties>
+                  </component>
+                  <component id="3ac40" class="javax.swing.JLabel">
+                    <constraints>
+                      <grid row="10" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties>
+                      <text value="Start Time"/>
+                    </properties>
+                  </component>
+                  <component id="7872d" class="javax.swing.JLabel">
+                    <constraints>
+                      <grid row="14" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties>
+                      <text value="End Time"/>
+                    </properties>
+                  </component>
+                  <component id="fdc44" class="javax.swing.JTextField" binding="endTime">
+                    <constraints>
+                      <grid row="15" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                        <preferred-size width="150" height="-1"/>
+                      </grid>
+                    </constraints>
+                    <properties>
+                      <text value="15:00"/>
+                      <toolTipText value="e.g. 14:00"/>
+                    </properties>
+                  </component>
+                  <component id="8ac85" class="javax.swing.JButton" binding="book">
+                    <constraints>
+                      <grid row="15" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties>
+                      <text value="Book"/>
+                    </properties>
+                  </component>
+                  <component id="46af2" class="javax.swing.JTextField" binding="endDate">
+                    <constraints>
+                      <grid row="13" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                        <preferred-size width="150" height="-1"/>
+                      </grid>
+                    </constraints>
+                    <properties>
+                      <text value="07/04/2018"/>
+                      <toolTipText value="e.g. DD/MM/YYYY"/>
+                    </properties>
+                  </component>
+                  <component id="19fd2" class="javax.swing.JLabel" binding="end">
+                    <constraints>
+                      <grid row="12" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties>
+                      <text value="End Date"/>
+                    </properties>
+                  </component>
+                </children>
               </grid>
-            </constraints>
-            <properties>
-              <text value="FirstNameExample"/>
-            </properties>
-          </component>
-          <component id="3f350" class="javax.swing.JLabel">
+            </children>
+          </grid>
+          <tabbedpane id="6d8e1" binding="releaseSpaceTab">
             <constraints>
-              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+              <tabbedpane title="Additional Options"/>
             </constraints>
-            <properties>
-              <labelFor value="25852"/>
-              <text value="First name"/>
-            </properties>
-          </component>
-          <component id="d74ea" class="javax.swing.JLabel">
-            <constraints>
-              <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-            </constraints>
-            <properties>
-              <text value="Last name"/>
-            </properties>
-          </component>
-          <component id="5d5a6" class="javax.swing.JTextArea" binding="lastName">
-            <constraints>
-              <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
-                <preferred-size width="150" height="-1"/>
+            <properties/>
+            <border type="none"/>
+            <children>
+              <grid id="63afe" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                <margin top="0" left="0" bottom="0" right="0"/>
+                <constraints>
+                  <tabbedpane title="Release Space"/>
+                </constraints>
+                <properties/>
+                <border type="none"/>
+                <children>
+                  <grid id="effb7" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                    <margin top="0" left="0" bottom="0" right="0"/>
+                    <constraints>
+                      <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties/>
+                    <border type="none"/>
+                    <children>
+                      <grid id="9594f" layout-manager="GridLayoutManager" row-count="10" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                        <margin top="0" left="0" bottom="0" right="0"/>
+                        <constraints>
+                          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false">
+                            <minimum-size width="100" height="100"/>
+                            <preferred-size width="1200" height="1200"/>
+                          </grid>
+                        </constraints>
+                        <properties/>
+                        <border type="none"/>
+                        <children>
+                          <component id="8ea23" class="javax.swing.JTextField" binding="releaseStartTime">
+                            <constraints>
+                              <grid row="3" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                                <preferred-size width="150" height="-1"/>
+                              </grid>
+                            </constraints>
+                            <properties>
+                              <text value="14:00"/>
+                              <toolTipText value="e.g. 14:00"/>
+                            </properties>
+                          </component>
+                          <component id="5e55c" class="javax.swing.JTextField" binding="releaseStartDate">
+                            <constraints>
+                              <grid row="1" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                                <preferred-size width="150" height="-1"/>
+                              </grid>
+                            </constraints>
+                            <properties>
+                              <text value="07/04/2018"/>
+                              <toolTipText value="e.g. DD/MM/YYYY"/>
+                            </properties>
+                          </component>
+                          <component id="315f4" class="javax.swing.JLabel">
+                            <constraints>
+                              <grid row="0" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties>
+                              <text value="Start Date"/>
+                            </properties>
+                          </component>
+                          <component id="623db" class="javax.swing.JLabel">
+                            <constraints>
+                              <grid row="2" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties>
+                              <text value="Start Time"/>
+                            </properties>
+                          </component>
+                          <component id="c5e57" class="javax.swing.JLabel">
+                            <constraints>
+                              <grid row="6" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties>
+                              <text value="End Time"/>
+                            </properties>
+                          </component>
+                          <component id="b3c20" class="javax.swing.JTextField" binding="releaseEndTime">
+                            <constraints>
+                              <grid row="7" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                                <preferred-size width="150" height="-1"/>
+                              </grid>
+                            </constraints>
+                            <properties>
+                              <text value="15:00"/>
+                              <toolTipText value="e.g. 14:00"/>
+                            </properties>
+                          </component>
+                          <component id="14b73" class="javax.swing.JTextField" binding="releaseEndDate">
+                            <constraints>
+                              <grid row="5" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                                <preferred-size width="150" height="-1"/>
+                              </grid>
+                            </constraints>
+                            <properties>
+                              <text value="07/04/2018"/>
+                              <toolTipText value="e.g. DD/MM/YYYY"/>
+                            </properties>
+                          </component>
+                          <component id="8abb7" class="javax.swing.JLabel">
+                            <constraints>
+                              <grid row="4" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties>
+                              <text value="End Date"/>
+                            </properties>
+                          </component>
+                          <component id="49de8" class="javax.swing.JLabel" binding="bookinglabel">
+                            <constraints>
+                              <grid row="8" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties>
+                              <text value="Booking Reference"/>
+                            </properties>
+                          </component>
+                          <component id="a6355" class="javax.swing.JTextField" binding="bookingreference">
+                            <constraints>
+                              <grid row="8" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                                <preferred-size width="150" height="-1"/>
+                              </grid>
+                            </constraints>
+                            <properties>
+                              <text value=""/>
+                              <toolTipText value="e.g. 14:00"/>
+                            </properties>
+                          </component>
+                          <component id="f2edd" class="javax.swing.JButton" binding="releaseSpace">
+                            <constraints>
+                              <grid row="9" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties>
+                              <text value="Release"/>
+                            </properties>
+                          </component>
+                        </children>
+                      </grid>
+                    </children>
+                  </grid>
+                </children>
               </grid>
-            </constraints>
-            <properties>
-              <text value="LastNameExample"/>
-            </properties>
-          </component>
-          <component id="a76c" class="javax.swing.JLabel">
-            <constraints>
-              <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-            </constraints>
-            <properties>
-              <text value="Email"/>
-            </properties>
-          </component>
-          <component id="1bf54" class="javax.swing.JTextArea" binding="email">
-            <constraints>
-              <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
-            </constraints>
-            <properties>
-              <text value="EmailExample@gmail.com"/>
-            </properties>
-          </component>
-          <component id="ee203" class="javax.swing.JLabel">
-            <constraints>
-              <grid row="6" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-            </constraints>
-            <properties>
-              <text value="Car Registration"/>
-            </properties>
-          </component>
-          <component id="6a19a" class="javax.swing.JTextArea" binding="carReg">
-            <constraints>
-              <grid row="7" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
-                <preferred-size width="150" height="-1"/>
-              </grid>
-            </constraints>
-            <properties>
-              <text value="BD51SMR"/>
-            </properties>
-          </component>
-          <component id="9394b" class="javax.swing.JTextField" binding="startTime">
-            <constraints>
-              <grid row="11" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
-                <preferred-size width="150" height="-1"/>
-              </grid>
-            </constraints>
-            <properties>
-              <text value="14:00"/>
-              <toolTipText value="e.g. 14:00"/>
-            </properties>
-          </component>
-          <component id="caf8d" class="javax.swing.JTextField" binding="startDate">
-            <constraints>
-              <grid row="9" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
-                <preferred-size width="150" height="-1"/>
-              </grid>
-            </constraints>
-            <properties>
-              <text value="07/04/2018"/>
-              <toolTipText value="e.g. DD/MM/YYYY"/>
-            </properties>
-          </component>
-          <component id="78b4e" class="javax.swing.JLabel" binding="Date">
-            <constraints>
-              <grid row="8" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-            </constraints>
-            <properties>
-              <text value="Date"/>
-            </properties>
-          </component>
-          <component id="6d702" class="javax.swing.JLabel">
-            <constraints>
-              <grid row="10" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-            </constraints>
-            <properties>
-              <text value="Start Time"/>
-            </properties>
-          </component>
-          <component id="693af" class="javax.swing.JLabel">
-            <constraints>
-              <grid row="14" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-            </constraints>
-            <properties>
-              <text value="End Time"/>
-            </properties>
-          </component>
-          <component id="12e57" class="javax.swing.JTextField" binding="endTime">
-            <constraints>
-              <grid row="15" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
-                <preferred-size width="150" height="-1"/>
-              </grid>
-            </constraints>
-            <properties>
-              <text value="15:00"/>
-              <toolTipText value="e.g. 14:00"/>
-            </properties>
-          </component>
-          <component id="15813" class="javax.swing.JButton" binding="book">
-            <constraints>
-              <grid row="15" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-            </constraints>
-            <properties>
-              <text value="Book"/>
-            </properties>
-          </component>
-          <component id="aad07" class="javax.swing.JTextField" binding="endDate">
-            <constraints>
-              <grid row="13" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
-                <preferred-size width="150" height="-1"/>
-              </grid>
-            </constraints>
-            <properties>
-              <text value="07/04/2018"/>
-              <toolTipText value="e.g. DD/MM/YYYY"/>
-            </properties>
-          </component>
-          <component id="62d61" class="javax.swing.JLabel" binding="end">
-            <constraints>
-              <grid row="12" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-            </constraints>
-            <properties>
-              <text value="End Date"/>
-            </properties>
-          </component>
+            </children>
+          </tabbedpane>
         </children>
-      </grid>
+      </tabbedpane>
     </children>
   </grid>
 </form>

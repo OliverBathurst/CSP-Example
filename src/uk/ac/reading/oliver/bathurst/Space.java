@@ -16,8 +16,21 @@ class Space {
         return isTaken;
     }
 
-    void setReserved(boolean value){
-        this.isReserved = value;
+    void setReserved(){
+        this.isReserved = true;
+    }
+
+    void removeReservation(Date start, Date end){
+        for(Pair p: reserveTimes){
+            if(p.getFirst().getTime() == start.getTime()
+                    && p.getSecond().getTime() == end.getTime()){
+                reserveTimes.remove(p);
+                break;
+            }
+        }
+        if(reserveTimes.isEmpty()){
+            this.isReserved = false;
+        }
     }
 
     boolean isSpaceReserved(){

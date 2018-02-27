@@ -7,6 +7,8 @@ import org.jcsp.awt.ActiveFrame;
 import org.jcsp.lang.CSProcess;
 import org.jcsp.lang.One2OneChannel;
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
 
 /**
@@ -17,26 +19,37 @@ import java.text.SimpleDateFormat;
 class BookingGUI implements CSProcess{
     private final SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
     private final SimpleDateFormat fullDateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm");
-    private final One2OneChannel bookingChannel;
+    private final One2OneChannel bookingChannel, depart;
     private ActiveFrame frame;
     private javax.swing.JPanel mainPanel;
+    private JTabbedPane tabbedPane;
     private javax.swing.JButton book;
     private javax.swing.JTextArea firstName, lastName, email, carReg;
     private JTextField startTime;
     private JTextField startDate;
-    private JLabel Date;
     private JTextField endTime;
     private JTextField endDate;
+    private JLabel Date;
     private JLabel end;
+    private JTabbedPane releaseSpaceTab;
+    private JTextField releaseEndTime;
+    private JTextField releaseEndDate;
+    private JTextField releaseStartTime;
+    private JTextField releaseStartDate;
+    private JLabel bookinglabel;
+    private JTextField bookingreference;
+    private JButton releaseSpace;
 
-    BookingGUI(One2OneChannel bookingChannel){
+    BookingGUI(One2OneChannel bookingChannel, One2OneChannel depart){
         this.bookingChannel = bookingChannel;
+        this.depart = depart;
         this.setupListeners();
         this.show();
     }
 
     private void setupListeners(){
         book.addActionListener(e -> book());
+        releaseSpace.addActionListener(e -> release());
     }
 
     /**
@@ -66,6 +79,15 @@ class BookingGUI implements CSProcess{
             }
         }else{
             JOptionPane.showMessageDialog(null, "At least one name required");
+        }
+    }
+
+    private void release(){
+        try{
+            bookingChannel.out().write(new BookingDetailsObject(fullDateFormat.parse(releaseStartDate.getText() + " " + releaseStartTime.getText()), fullDateFormat.parse(releaseEndDate.getText() + " " + releaseEndTime.getText()),
+                    bookingreference.getText().trim(), true));
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, e.getMessage());
         }
     }
 

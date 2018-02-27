@@ -23,9 +23,10 @@ class Main {
         One2OneChannel unitChannel = Channel.one2one();
 
         new Parallel(
-                new CSProcess[]{new Customer(receipt, arrive, depart), new Arrivals(arrive), new Departs(depart), new Control(arrive, depart, request, response),
+                new CSProcess[]{new Arrivals(arrive), new Departs(depart), new Control(arrive, depart, request, response),
+                        new Customer(receipt, arrive, depart),
                         new Booking(bookingChannel, eticket, request, response), new ETicketMailBag(eticket, unitChannel, receipt),
-                        new MailInboxGUI(unitChannel), new BookingGUI(bookingChannel)
+                        new MailInboxGUI(unitChannel), new BookingGUI(bookingChannel, depart)
                 }).run();
     }
 }
