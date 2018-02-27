@@ -25,7 +25,7 @@ class Main {
         new Parallel(
                 new CSProcess[]{new Customer(receipt, arrive, depart), new Arrivals(arrive), new Departs(depart), new Control(arrive, depart, request, response),
                         new Booking(bookingChannel, eticket, request, response), new ETicketMailBag(eticket, unitChannel, receipt),
-                        new ETicketGUI(unitChannel), new BookingGUI(bookingChannel)
+                        new MailInboxGUI(unitChannel), new BookingGUI(bookingChannel)
                 }).run();
     }
 }

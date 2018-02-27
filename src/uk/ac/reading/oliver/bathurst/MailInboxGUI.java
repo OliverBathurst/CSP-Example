@@ -12,7 +12,7 @@ import javax.swing.*;
  * The booking GUI class writes to the eticket channel once a booking has been placed,
  * this class then reads said channel and produces an eticket with the provided information.
  */
-class ETicketGUI implements CSProcess {
+class MailInboxGUI implements CSProcess {
     private final DefaultListModel<String> listModel = new DefaultListModel<>();
     private final One2OneChannel unitChannel;
     private JPanel panel1;
@@ -26,7 +26,7 @@ class ETicketGUI implements CSProcess {
      * Sets up the channel for eticket interception and the list used to display
      * Also sets up listeners for filtering through bookings such as previous, next and delete
      */
-    ETicketGUI(One2OneChannel unitChannel){
+    MailInboxGUI(One2OneChannel unitChannel){
         this.unitChannel = unitChannel;
         this.showGUI();
         this.inbox.setModel(listModel);
@@ -62,7 +62,7 @@ class ETicketGUI implements CSProcess {
 
     /**
      * Waits for a booking object on the unit channel, adds to the list (simulated mail inbox)
-     * ETicketGUI -> display receipt -> ETicketGUI
+     * MailInboxGUI -> display receipt -> MailInboxGUI
      */
     @Override
     public void run() {
