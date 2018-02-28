@@ -71,6 +71,7 @@ class Control implements CSProcess {
                         Space space = bookingReferences.get(arriveString);
                         if (space != null) {
                             space.setReserved();//get space number using booking reference, set to reserved, owner of space has arrived
+                            System.out.println("Space reserved");
                         }else{
                             System.out.println("Cannot find space associated with booking reference");
                         }
@@ -86,11 +87,14 @@ class Control implements CSProcess {
                                 bookingReferences.put(reference, spaces[spaceIndex]);//store booking and space in hash map
                                 request.setBookingReference(reference);//set customer booking ref in the object
                                 request.setParkingSpace(spaceIndex);//set customer space number in the object
+                                System.out.println("Booking successful");
                                 responseChannel.out().write("Booking successful");//write to response channel it was successful
                             }else{
+                                System.out.println("Booking unsuccessful");
                                 responseChannel.out().write("");//write empty (failure) string
                             }
                         } else {
+                            System.out.println("Booking unsuccessful");
                             responseChannel.out().write("");//write empty (failure) string
                         }
                     }else{//Someone has requested a cancel of their booking

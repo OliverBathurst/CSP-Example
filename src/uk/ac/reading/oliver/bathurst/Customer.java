@@ -43,7 +43,6 @@ class Customer implements CSProcess{
         while (!(endDateAndTime > new Date().getTime())){}
 
         //depart with booking ref
-
         depart.out().write(bookingReceipt);
 
         //finish
