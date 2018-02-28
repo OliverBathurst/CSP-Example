@@ -45,7 +45,6 @@ class Space {
         if(!isReserved){
             reserveTimes.add(new Pair(start, finish));
             isReserved = true;
-            success = true;
         }else{
             for (Pair p : reserveTimes) {//iterate over all bookings for this space
                 long startLong = p.getFirst().getTime();//get the start and end times
