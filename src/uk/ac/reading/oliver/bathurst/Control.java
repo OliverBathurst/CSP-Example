@@ -67,8 +67,13 @@ class Control implements CSProcess {
                     String arriveString = arrive.in().read().toString();//read in arrival as a string
                     if(arriveString.equals("generic arrive") && spacesLeft != 0){//if there are spaces and it's a generic car arrival
                         arrive();
-                    }else if(!arriveString.equals("generic arrive")){//reserved space owner arrives with booking reference
-                        bookingReferences.get(arriveString).setReserved();//get space number using booking reference, set to reserved, owner of space has arrived
+                    }else if(!arriveString.equals("generic arrive")) {//reserved space owner arrives with booking reference
+                        Space space = bookingReferences.get(arriveString);
+                        if (space != null) {
+                            space.setReserved();//get space number using booking reference, set to reserved, owner of space has arrived
+                        }else{
+                            System.out.println("Cannot find space associated with booking reference");
+                        }
                     }
                     break;
                 case 2:
