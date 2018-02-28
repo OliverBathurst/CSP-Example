@@ -1,9 +1,4 @@
-/*
-  Created by Oliver on 16/02/2018.
-  Written by Oliver Bathurst <oliverbathurst12345@gmail.com>
- */
-
-package uk.ac.reading.oliver.bathurst;
+package uk.ac.reading;
 import org.jcsp.lang.CSProcess;
 import org.jcsp.lang.One2OneChannel;
 import java.util.Date;

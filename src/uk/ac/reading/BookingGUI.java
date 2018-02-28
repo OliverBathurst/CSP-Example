@@ -1,14 +1,8 @@
-/*
-  Created by Oliver on 05/02/2018.
-  Written by Oliver Bathurst <oliverbathurst12345@gmail.com>
- */
-package uk.ac.reading.oliver.bathurst;
+package uk.ac.reading;
 import org.jcsp.awt.ActiveFrame;
 import org.jcsp.lang.CSProcess;
 import org.jcsp.lang.One2OneChannel;
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
 
 /**

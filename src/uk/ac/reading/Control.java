@@ -1,8 +1,4 @@
-/*
-  Created by Oliver on 05/02/2018.
-  Written by Oliver Bathurst <oliverbathurst12345@gmail.com>
- */
-package uk.ac.reading.oliver.bathurst;
+package uk.ac.reading;
 import org.jcsp.lang.*;
 import java.util.HashMap;
 import java.util.Random;

@@ -1,4 +1,4 @@
-package uk.ac.reading.oliver.bathurst;
+package uk.ac.reading;
 import java.util.ArrayList;
 import java.util.Date;
 

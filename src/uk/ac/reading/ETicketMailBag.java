@@ -1,4 +1,4 @@
-package uk.ac.reading.oliver.bathurst;
+package uk.ac.reading;
 import org.jcsp.lang.CSProcess;
 import org.jcsp.lang.One2OneChannel;
 
