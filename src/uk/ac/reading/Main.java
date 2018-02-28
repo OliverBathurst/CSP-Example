@@ -22,7 +22,7 @@ class Main {
                 new CSProcess[]{new Arrivals(arrive), new Departs(depart), new Control(arrive, depart, request, response),
                         new Customer(receipt, arrive, depart),
                         new Booking(bookingChannel, eticket, request, response), new ETicketMailBag(eticket, unitChannel, receipt),
-                        new MailInboxGUI(unitChannel), new BookingGUI(bookingChannel, depart)
+                        new MailInboxGUI(unitChannel), new BookingGUI(bookingChannel)
                 }).run();
     }
 }

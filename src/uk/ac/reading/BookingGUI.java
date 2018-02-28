@@ -1,5 +1,4 @@
 package uk.ac.reading;
-import org.jcsp.awt.ActiveFrame;
 import org.jcsp.lang.CSProcess;
 import org.jcsp.lang.One2OneChannel;
 import javax.swing.*;
@@ -13,8 +12,7 @@ import java.text.SimpleDateFormat;
 class BookingGUI implements CSProcess{
     private final SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
     private final SimpleDateFormat fullDateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm");
-    private final One2OneChannel bookingChannel, depart;
-    private ActiveFrame frame;
+    private final One2OneChannel bookingChannel;
     private javax.swing.JPanel mainPanel;
     private JTabbedPane tabbedPane;
     private javax.swing.JButton book;
@@ -34,9 +32,8 @@ class BookingGUI implements CSProcess{
     private JTextField bookingreference;
     private JButton releaseSpace;
 
-    BookingGUI(One2OneChannel bookingChannel, One2OneChannel depart){
+    BookingGUI(One2OneChannel bookingChannel){
         this.bookingChannel = bookingChannel;
-        this.depart = depart;
         this.setupListeners();
         this.show();
     }

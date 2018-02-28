@@ -8,7 +8,8 @@ import java.util.Date;
 
 class BookingDetailsObject {
     private String firstName, lastName, email, carReg, startTime, endTime;
-    private Date startDate, endDate, fullStart, fullEnd;
+    private Date startDate, endDate;
+    private final Date fullStart, fullEnd;
     private String bookingReference;
     private int spaceNumber;
     private boolean isReleasing = false;
