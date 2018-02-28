@@ -91,9 +91,9 @@ class Control implements CSProcess {
                     }else{//Someone has requested a cancel of their booking
                         Space space = bookingReferences.get(request.getBookingReference());//check that the booking reference exists and returns a space
                         if(space != null){
-                            space.removeReservation(request.getFullStartDate(), request.getFullEndDate());
-                            bookingReferences.remove(request.getBookingReference());
-                            responseChannel.out().write("Booking successfully cancelled");
+                            space.removeReservation(request.getFullStartDate(), request.getFullEndDate());//remove reservation from space
+                            bookingReferences.remove(request.getBookingReference());//remove from booking references
+                            responseChannel.out().write("Booking successfully cancelled");//write response
                         }else{
                             responseChannel.out().write("Booking does not exist");
                         }
@@ -114,7 +114,7 @@ class Control implements CSProcess {
             }
         }
         spacesLeft = counter;
-        //System.out.println("Spaces left: " + spacesLeft);
+        System.out.println("Spaces left: " + spacesLeft);
     }
 
     /**

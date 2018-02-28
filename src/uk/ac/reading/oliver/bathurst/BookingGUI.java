@@ -82,6 +82,10 @@ class BookingGUI implements CSProcess{
         }
     }
 
+    /**
+     * release creates a smaller booking object with a cancellation flag, it is then written to the booking channel
+     * the booking process checks for this flag and decides whether or not to send a cancel request to control.
+     */
     private void release(){
         try{
             bookingChannel.out().write(new BookingDetailsObject(fullDateFormat.parse(releaseStartDate.getText() + " " + releaseStartTime.getText()), fullDateFormat.parse(releaseEndDate.getText() + " " + releaseEndTime.getText()),

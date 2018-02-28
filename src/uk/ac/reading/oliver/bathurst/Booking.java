@@ -37,9 +37,9 @@ class Booking implements CSProcess {
                 } else {
                     System.out.println("Booking unavailable");//print none available
                 }
-            }else if(requestObj.isCustomerCancelling()){
-                request.out().write(requestObj);
-                System.out.println(response.in().read().toString());
+            }else if(requestObj.isCustomerCancelling()){//if the request is a cancellation
+                request.out().write(requestObj);//write the object in the request
+                System.out.println(response.in().read().toString());//print response
             }
         }
     }
